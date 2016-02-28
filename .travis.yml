@@ -1,0 +1,27 @@
+language: node_js
+
+node_js:
+    - "0.10"
+before_install:
+  - npm install -g ionic
+  - npm install -g gulp
+  - npm install -g protractor
+  - webdriver-manager update
+  - npm install
+
+before_script:
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
+
+script:
+  - npm test
+  - ionic serve --address localhost --port 8100 --nolivereload --nobrowser &
+  - ionicpid=$!
+  #- protractor tests/features.conf.js
+  - kill -15 $ionicpid
+
+notifications:
+  email: false
+
+
+
