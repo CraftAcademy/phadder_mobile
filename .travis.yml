@@ -17,7 +17,7 @@ script:
   - npm test
   - ionic serve --address localhost --port 8100 --nolivereload --nobrowser &
   - ionicpid=$!
-  #- protractor tests/features.conf.js
+  - protractor tests/features.conf.js
   - kill -15 $ionicpid
 
 notifications:
