@@ -11,7 +11,7 @@ describe('Login feature', function () {
 
   it('should be on root path', function () {
     expect(browser.getLocationAbsUrl()).toMatch('/');
-  })
+  });
 
   it('should route to login page', function () {
     loginButton.click().then(function () {

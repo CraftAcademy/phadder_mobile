@@ -6,10 +6,16 @@ angular.module('project_unify.services', [])
       "user": {
         "id": 1,
         "user_name": "Thomas Ochman",
-        "created_at": "2016-02-25T10:45:24.020Z"
+        "created_at": "2016-02-25"
       }
     };
     return currentUser.user;
+  })
+
+  .factory('registerUser', function($http, cretentials) {
+    var url = 'http://localhost:3000';
+    var factory = {};
+    $
   })
 
   .factory('Users', function () {
