@@ -1,6 +1,8 @@
 exports.config = {
   capabilities: {
-    'browserName': 'phantomjs'
+    'browserName': 'phantomjs',
+    'phantomjs.binary.path': require('phantomjs').path,
+    'phantomjs.ghostdriver.cli.args': ['--loglevel=DEBUG']
   },
   baseUrl: 'http://localhost:8100',
   specs: [
