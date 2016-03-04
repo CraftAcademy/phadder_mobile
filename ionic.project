@@ -1,0 +1,14 @@
+{
+  "name": "ProjectUnifyMobile",
+  "app_id": "a2b7129f",
+  "gulpStartupTasks": [
+    "sass",
+    "watch"
+  ],
+  "watchPatterns": [
+    "www/**/*",
+    "!www/lib/**/*",
+    "scss/*.scss",
+    "scss/*.sass"
+  ]
+}
