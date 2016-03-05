@@ -34,7 +34,7 @@ angular.module('project_unify', ['ionic', 'project_unify.controllers', 'project_
     .state('welcome', {
       url: '/welcome',
       templateUrl: 'templates/welcome/intro.html',
-      controller: 'DemoCtrl'
+      controller: 'LoginController'
     })
 
   // setup an abstract state for the tabs directive

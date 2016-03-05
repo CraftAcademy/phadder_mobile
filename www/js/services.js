@@ -12,10 +12,25 @@ angular.module('project_unify.services', [])
     return currentUser.user;
   })
 
-  .factory('registerUser', function($http, cretentials) {
-    var url = 'http://localhost:3000';
-    var factory = {};
-    $
+  .factory('serviceName', function () {
+    return {}
+  })
+
+  .factory('loginService', function ($http) {
+    return {
+      login: function (hash) {
+        console.log(hash);
+        $http({
+          method: 'POST',
+          url: 'https://unify-develop.herokuapp.com/api/v1/users/sign_in',
+          headers: {'HTTP-ACCEPT': 'application/json'},
+          data: hash
+        })
+          .then(function (response) {
+            return response.data.user;
+          });
+      }
+    }
   })
 
   .factory('Users', function () {

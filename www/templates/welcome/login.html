@@ -4,18 +4,18 @@
     <button class="button button-icon button-clear button-light ion-android-close" ng-click="closeLogin()"></button>
   </ion-header-bar>
   <ion-content class="padding">
-    <div class="list card"> 
+    <div class="list card">
       <label class="item item-input">
         <span class="input-label">Email</span>
-        <input type="email" focus-me>
+        <input type="email" ng-model="data.username" focus-me>
       </label>
       <label class="item item-input">
       <span class="input-label">Password</span>
-        <input type="password">
+        <input type="password" ng-model="data.password">
       </label>
     </div>
 
-    <button class="button button-block button-outline button-light" ng-click="goToHome()"><b>Sign in</b></button>
+    <button class="button button-block button-outline button-light" ng-click="performLogin()"><b>Sign in</b></button>
 
     <div class="light row">
       <div class="col">

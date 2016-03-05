@@ -4,4 +4,8 @@ describe("Testing Jasmine", function() {
     expect(1).toEqual(1);
   });
 
+  it("returns true", function() {
+    expect(true).toBe(true);
+  });
+
 });
