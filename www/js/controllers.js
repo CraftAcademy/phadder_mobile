@@ -9,13 +9,13 @@ angular.module('project_unify.controllers', [])
     };
 
     $scope.doSignUp = function (user_name, email, password, passwordConfirmation) {
-      signUpService.save({user: {user_name: user_name, email: email, password: password, password_confirmation: passwordConfirmation}}, function(user){
+      signUpService.get({user: {user_name: user_name, email: email, password: password, password_confirmation: passwordConfirmation}}, function(user){
         $scope.closeRegister();
         $scope.handleCurrentUser(user);
       });
     };
 
-    $scope.doFacebookSignUp = function() {
+    $scope.doFacebook = function() {
       facebookService.save({},
         function(user) {
           // success
