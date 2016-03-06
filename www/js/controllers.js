@@ -16,10 +16,19 @@ angular.module('project_unify.controllers', [])
     };
 
     $scope.doFacebookSignUp = function() {
-      facebookService.save(function(user){
-        $scope.closeRegister();
-        $scope.handleCurrentUser(user);
-      });
+      facebookService.save({},
+        function(user) {
+          // success
+          $scope.closeRegister();
+          $scope.handleCurrentUser(user);
+        }, function(e) {
+          $scope.handleError(e);
+        });
+
+      //facebookService.save(function(user){
+      //  $scope.closeRegister();
+      //  $scope.handleCurrentUser(user);
+      //});
     };
 
     // Perform User actions
@@ -29,9 +38,33 @@ angular.module('project_unify.controllers', [])
       $state.go('tab.me');
       console.log($rootScope.currentUser);
     };
+
+    // Display error
+    $scope.handleError = function(e){
+      $scope.data = e;
+      $scope.openError();
+      console.log(e);
+    };
+
+    // Set token
     $scope.setToken = function(user){
       $rootScope.token = user.token;
     };
+
+    // Error modal
+    $ionicModal.fromTemplateUrl('templates/modals/error.html', {
+      scope: $scope,
+      animation: 'slide-in-up'
+    }).then(function (modal) {
+      $scope.modalError = modal;
+    });
+    $scope.openError = function () {
+      $scope.modalError.show();
+    };
+    $scope.closeError = function () {
+      $scope.modalError.hide();
+    };
+
 
     // Login modal
     $ionicModal.fromTemplateUrl('templates/welcome/login.html', {
