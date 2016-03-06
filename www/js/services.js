@@ -2,10 +2,10 @@ angular.module('project_unify.services', [])
 
 
   .factory('signUpService', function ($resource) {
-    return $resource('https://unify-develop.herokuapp.com/api/v1/users', {},{
-      save:{
-        method:"POST",
-        headers:{HTTP_ACCEPT: 'application/json'}
+    return $resource('https://unify-develop.herokuapp.com/api/v1/users', {}, {
+      save: {
+        method: "POST",
+        headers: {HTTP_ACCEPT: 'application/json'}
       }
     });
   })
@@ -16,6 +16,17 @@ angular.module('project_unify.services', [])
 
   .factory('facebookService', function ($resource) {
     return $resource('https://unify-develop.herokuapp.com/api/v1/users/auth/facebook');
+  })
+
+  .factory('unifyService', function ($rootScope, $resource) {
+    var unify = $resource('https://unify-develop.herokuapp.com/api/v1/unify/:id', {}, {
+      get: {
+        method: 'GET',
+        headers: {'X-User-Email': $rootScope.currentUser.user.email, 'X-User-Token': $rootScope.currentUser.user.token}
+      }
+    });
+
+    return unify;
   })
 
   .factory('Users', function () {

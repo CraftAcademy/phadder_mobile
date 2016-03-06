@@ -1,17 +1,17 @@
 <ion-view view-title="Me">
-  <ion-nav-buttons side="secondary">
+  <!--ion-nav-buttons side="secondary">
     <button class="button button-icon ion-ios-gear-outline" ui-sref="tab.settings"></button>
-  </ion-nav-buttons>
+  </ion-nav-buttons-->
   <ion-content class="stable-bg">
     <div class="header-me">
       <div class="overlay">
         <div class="row row-center upper" ui-sref="tab.myprofile">
           <div class="col-33">
-            <img src="https://i1.sndcdn.com/avatars-000008553910-pzwwqu-t500x500.jpg" alt="">
+            <img src="https://thesocietypages.org/socimages/files/2009/05/nopic_192.gif" alt="">
           </div>
           <div class="col-50">
             <h2>{{currentUser.user_name}}</h2>
-            <p>{{currentUser.email}}</p>
+            <p ng-if="currentUser.mentor === true">Mentor</p>
           </div>
           <div class="col text-right">
             <i class="icon ion-chevron-right"></i>
@@ -31,7 +31,7 @@
       </div>
     </div>
 
-    <!--div class="list">
+    <div class="list">
       <div class="item item-divider text-muted">
         Notifications
       </div>
@@ -82,6 +82,6 @@
           <span class="seemore">+7 more</span>
         </div>
       </div>
-    </div-->
+    </div>
   </ion-content>
 </ion-view>

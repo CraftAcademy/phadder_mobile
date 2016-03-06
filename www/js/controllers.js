@@ -10,6 +10,7 @@ angular.module('project_unify.controllers', [])
 
     $scope.doSignUp = function (user_name, email, password, passwordConfirmation) {
       signUpService.save({user: {user_name: user_name, email: email, password: password, password_confirmation: passwordConfirmation}}, function(user){
+        console.log(user);
         $scope.closeRegister();
         $scope.handleCurrentUser(user);
       });
@@ -47,6 +48,7 @@ angular.module('project_unify.controllers', [])
     // Perform User actions
     $scope.handleCurrentUser = function(user) {
       $rootScope.currentUser = user;
+      $rootScope.token = user.token;
       $scope.setToken(user);
       $state.go('tab.me');
       console.log($rootScope.currentUser);
@@ -109,10 +111,21 @@ angular.module('project_unify.controllers', [])
   })
 
 
-  .controller('DemoCtrl', function ($scope, $rootScope, $ionicSideMenuDelegate, $ionicModal, Users, $ionicLoading, $state, $timeout) {
+  .controller('DemoCtrl', function ($scope, $rootScope, $ionicSideMenuDelegate, $ionicModal, Users, $ionicLoading, $state, $timeout, unifyService) {
     $scope.users = Users.all();
     $scope.currentUser = $rootScope.currentUser.user;
     console.log($scope.currentUser);
+
+    $scope.unifyMe = function (id) {
+      console.log('scope user email' + $scope.currentUser.email);
+      console.log('token:' + $scope.currentUser.token);
+      var list = angular.element( document.querySelector( '#list' ) );
+      unifyService.get({id: id}, function(data){
+        $scope.matches = data.matches;
+        console.log(data.matches);
+      });
+
+    };
 
     $scope.toggleMenu = function () {
       $ionicSideMenuDelegate.toggleRight();
@@ -134,7 +147,7 @@ angular.module('project_unify.controllers', [])
         $scope.closeLogin();
         $scope.closeRegister();
       }, 2000);
-    }
+    };
 
     $scope.actionSheet = function () {
       var hideSheet = $ionicActionSheet.show({
