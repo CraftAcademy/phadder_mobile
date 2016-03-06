@@ -6,6 +6,7 @@
   },
   "dependencies": {
     "ionic-ion-tinder-cards": "ionic-contrib-tinder-cards#*",
-    "angular-resource": "~1.5.0"
+    "angular-resource": "~1.5.0",
+    "angular-gravatar": "^0.4.1"
   }
 }

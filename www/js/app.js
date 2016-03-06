@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('project_unify', ['ionic', 'project_unify.controllers', 'project_unify.services', 'project_unify.directives', 'ionic.contrib.ui.tinderCards', 'ngResource'])
+angular.module('project_unify', ['ionic', 'project_unify.controllers', 'project_unify.services', 'project_unify.directives', 'ionic.contrib.ui.tinderCards', 'ngResource', 'ui.gravatar'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -140,3 +140,16 @@ angular.module('project_unify', ['ionic', 'project_unify.controllers', 'project_
   $urlRouterProvider.otherwise('/welcome');
 
 });
+
+angular.module('ui.gravatar').config([
+  'gravatarServiceProvider', function(gravatarServiceProvider) {
+    gravatarServiceProvider.defaults = {
+      size     : 100,
+      "default": 'wavatar'  // Mystery man as default for missing avatars
+    };
+
+    // Use https endpoint
+    gravatarServiceProvider.secure = true;
+
+  }
+]);

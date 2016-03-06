@@ -1,9 +1,9 @@
-<ion-view view-title="Thomas Ochman">
+<ion-view view-title="{{currentUser.user_name}}">
   <ion-content class="stable-bg has-bg" ng-style="{'background-image': 'url(\'' + 'img/bg.png' + '\')'}">
     <div class="list card profile-top text-center">
       <div class="item item-text-wrap">
         <button class="button button-icon ion-edit calm"></button>
-        <img src="https://thesocietypages.org/socimages/files/2009/05/nopic_192.gif" class="avatar-profile" alt="">
+        <img gravatar-src="currentUser.email" class="avatar-profile">
         <h2 class="font-thin">{{currentUser.user_name}}</h2>
         <p class="text-muted" ng-if="currentUser.mentor === true">Mentor</p>
         <div class="padding">
@@ -23,7 +23,7 @@
           <p><i class="icon ion-person-stalker"></i> {{matches.length}} potential matches</p>
         </div>
         <div class="item item-avatar" ng-repeat="item in matches">
-          <img src="https://thesocietypages.org/socimages/files/2009/05/nopic_192.gif"/>
+          <img gravatar-src="item.user.email">
           <h2>{{item.user.user_name}} </h2>
           <small ng-repeat="skill in item.user.skills">
             {{skill}}
