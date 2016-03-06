@@ -9,18 +9,20 @@ angular.module('project_unify.controllers', [])
     };
 
     $scope.doSignUp = function (user_name, email, password, passwordConfirmation) {
-      signUpService.get({user: {user_name: user_name, email: email, password: password, password_confirmation: passwordConfirmation}}, function(user){
+      signUpService.save({user: {user_name: user_name, email: email, password: password, password_confirmation: passwordConfirmation}}, function(user){
         $scope.closeRegister();
         $scope.handleCurrentUser(user);
       });
     };
 
+    // Facebook login - disabled
     $scope.doFacebook = function() {
-      facebookService.save({},
+      facebookService.get({},
         function(user) {
           // success
           if(user.errors.length === 0) {
-            if($scope.modalLogin.isShown() == true){
+            console.log(user);
+            if($scope.modalLogin.isShown()){
               $scope.closeLogin;
             } else {
               $scope.closeRegister();

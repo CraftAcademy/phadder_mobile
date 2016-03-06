@@ -2,7 +2,12 @@ angular.module('project_unify.services', [])
 
 
   .factory('signUpService', function ($resource) {
-    return $resource('https://unify-develop.herokuapp.com/api/v1/users');
+    return $resource('https://unify-develop.herokuapp.com/api/v1/users', {},{
+      save:{
+        method:"POST",
+        headers:{HTTP_ACCEPT: 'application/json'}
+      }
+    });
   })
 
   .factory('loginService', function ($resource) {
