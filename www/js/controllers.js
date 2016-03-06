@@ -16,7 +16,7 @@ angular.module('project_unify.controllers', [])
     };
 
     $scope.doFacebookSignUp = function() {
-      facebookService.get(function(user){
+      facebookService.save(function(user){
         $scope.closeRegister();
         $scope.handleCurrentUser(user);
       });
