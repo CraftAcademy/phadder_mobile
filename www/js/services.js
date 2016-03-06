@@ -1,19 +1,8 @@
 angular.module('project_unify.services', [])
 
-  .factory('currentUser', function () {
-    //Here we will be calling the api and logging in user
-    var currentUser = {
-      "user": {
-        "id": 1,
-        "user_name": "Thomas Ochman",
-        "created_at": "2016-02-25"
-      }
-    };
-    return currentUser.user;
-  })
 
-  .factory('serviceName', function () {
-    return {}
+  .factory('signUpService', function ($resource) {
+    return $resource('https://unify-develop.herokuapp.com/api/v1/users');
   })
 
   .factory('loginService', function ($resource) {

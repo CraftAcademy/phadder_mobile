@@ -1,12 +1,29 @@
 angular.module('project_unify.controllers', [])
 
-  .controller('LoginController', function ($scope, $rootScope, $state, $ionicModal, loginService) {
-    $scope.data = {};
-    $scope.performLogin = function(email, password) {
-      $rootScope.currentUser = loginService.save({user:{email: email, password: password}});
-      $scope.closeLogin();
+  .controller('LoginController', function ($scope, $rootScope, $state, $ionicModal, loginService, signUpService) {
+    $scope.performLogin = function (email, password) {
+      loginService.save({user: {email: email, password: password}}, function (user) {
+        $scope.closeLogin();
+        $scope.handleCurrentUser(user);
+      });
+    };
+
+    $scope.doSignUp = function (user_name, email, password, passwordConfirmation) {
+      signUpService.save({user: {user_name: user_name, email: email, password: password, password_confirmation: passwordConfirmation}}, function(user){
+        $scope.closeRegister();
+        $scope.handleCurrentUser(user);
+      });
+    };
+
+    // Perform User actions
+    $scope.handleCurrentUser = function(user) {
+      $rootScope.currentUser = user;
+      $scope.setToken(user);
       $state.go('tab.me');
       console.log($rootScope.currentUser);
+    };
+    $scope.setToken = function(user){
+      $rootScope.token = user.token;
     };
 
     // Login modal
@@ -39,7 +56,7 @@ angular.module('project_unify.controllers', [])
   })
 
 
-  .controller('DemoCtrl', function ($scope, $rootScope, $ionicSideMenuDelegate, $ionicModal, Users, $ionicLoading, $state, $timeout, currentUser) {
+  .controller('DemoCtrl', function ($scope, $rootScope, $ionicSideMenuDelegate, $ionicModal, Users, $ionicLoading, $state, $timeout) {
     $scope.users = Users.all();
     $scope.currentUser = $rootScope.currentUser.user;
     console.log($scope.currentUser);
@@ -111,9 +128,6 @@ angular.module('project_unify.controllers', [])
     $scope.closePost = function () {
       $scope.modalPost.hide();
     };
-
-
-
 
 
     // Tinder cards
