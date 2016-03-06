@@ -20,6 +20,8 @@ module.exports = function (config) {
       '../www/lib/ionic/js/angular/angular.js',
       '../www/lib/angular-ui-router/release/angular-ui-router.js',
       '../www/lib/angular-mocks/angular-mocks.js',
+      '../www/lib/angular-resource/angular-resource.js',
+      '../www/lib/angular-gravatar/build/angular-gravatar.js',
 
       //App code
       '../www/js/*.js',

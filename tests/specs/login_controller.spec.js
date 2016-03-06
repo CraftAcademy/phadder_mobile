@@ -1,16 +1,18 @@
 describe('LoginController', function () {
 
 
-  var $scope, controller, httpBackend;
+  var $scope, controller, httpBackend, $rootScope, loginService;
 
   beforeEach(module('project_unify'));
 
-  beforeEach(inject(function ($rootScope,
+  beforeEach(inject(function (_$rootScope_,
                               $controller,
                               $state,
                               $httpBackend,
-                              $ionicModal) {
+                              $ionicModal,
+                              loginService) {
 
+    $rootScope = _$rootScope_;
     $scope = $rootScope.$new();
     httpBackend = $httpBackend;
     var valid_response = readJSON('fixtures/current_user.json');
@@ -21,7 +23,9 @@ describe('LoginController', function () {
     controller = $controller('LoginController', {
       $scope: $scope,
       $state: $state,
-      $ionicModal: $ionicModal
+      $ionicModal: $ionicModal,
+      $rootScope: $rootScope,
+      loginService: loginService
 
     });
   }));
@@ -37,65 +41,60 @@ describe('LoginController', function () {
       expect($scope).toBeDefined();
     });
 
-    it('should respond to #openLogin', function () {
-      expect(typeof $scope.openLogin).toBeDefined();
-      expect(typeof $scope.openLogin).toBe("function");
+    it('should respond to #performLogin', function () {
+      expect(typeof $scope.performLogin).toBeDefined();
+      expect(typeof $scope.performLogin).toBe("function");
     });
 
-    it('should respond to #closeLogin', function () {
-      expect(typeof $scope.closeLogin).toBeDefined()
-      expect(typeof $scope.closeLogin).toBe("function");
+    it('should respond to #doSignUp', function () {
+      expect(typeof $scope.doSignUp).toBeDefined()
+      expect(typeof $scope.doSignUp).toBe("function");
     });
 
-    xit('should have a #showCard status', function () {
-      expect(typeof $scope.showCard).toBeDefined();
-      expect(typeof $scope.showCard).toBe("boolean");
+    it('should respond to #doFacebook', function () {
+      expect(typeof $scope.doFacebook).toBeDefined();
+      expect(typeof $scope.doFacebook).toBe("function");
     });
 
-    xit('should have a #searchResult object', function () {
-      expect(typeof $scope.searchResult).toBeDefined();
-      expect(typeof $scope.searchResult).toBe("object");
+    it('should respond to #handleCurrentUser', function () {
+      expect(typeof $scope.handleCurrentUser).toBeDefined()
+      expect(typeof $scope.handleCurrentUser).toBe("function");
     });
 
-    xit('should have a #error object', function () {
-      expect(typeof $scope.error).toBeDefined();
-      expect(typeof $scope.error).toBe("object");
+    it('should respond to #handleError', function () {
+      expect(typeof $scope.handleError).toBeDefined();
+      expect(typeof $scope.handleError).toBe("function");
+    });
+
+    it('should respond to #setToken', function () {
+      expect(typeof $scope.setToken).toBeDefined();
+      expect(typeof $scope.setToken).toBe("function");
+    });
+
+    xit('should have a $rootScope.currentUser object', function () {
+      expect(typeof $rootScope.currentUser).toBeDefined();
+      expect(typeof $rootScope.currentUser).toBe("object");
     });
 
 
     describe('when initialized', function () {
-      xit('#productList is empty', function () {
-        expect($scope.searchResult).toBe(null);
+      xit('#currentUser is empty', function () {
+        expect($rootScope.currentUser).toBe(null);
       });
-
-      xit('showScan is set to false', function () {
-        expect($scope.showScan).toBe(false);
-      });
-
-      xit('showCard is set to false', function () {
-        expect($scope.showCard).toBe(false);
-      });
-
     });
 
     describe('#performLogin', function () {
 
       beforeEach(function () {
-          loginService.login({user: {email: 'random@random.com', token: 'xxxxxx'}});
+          loginService.save({user: {email: 'random@random.com', token: 'xxxxxx'}});
           httpBackend.flush();
         }
       );
 
       xit('should return a user object', function () {
-        expect($scope.searchResult.product_name).toBe('Fiberrost');
+        expect($rootScope.currentUser.user_name).toBe('Thomas Ochman');
       });
 
-      xit('should set $rootScope#currentUser', function () {
-        var currentUser = {email: 'random@random.com', token: 'xxxxxx'};
-        $scope.searchProduct('2222');
-        httpBackend.flush();
-        expect($rootScope.currentUser).toBe(currentUser);
-      });
 
     });
 
