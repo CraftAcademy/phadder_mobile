@@ -19,9 +19,20 @@ angular.module('project_unify.controllers', [])
       facebookService.save({},
         function(user) {
           // success
-          $scope.closeRegister();
-          $scope.handleCurrentUser(user);
+          if(user.errors.length === 0) {
+            if($scope.modalLogin.isShown() == true){
+              $scope.closeLogin;
+            } else {
+              $scope.closeRegister();
+            }
+            $scope.handleCurrentUser(user);
+          } else {
+            $scope.handleError(user);
+          }
         }, function(e) {
+          //request errors
+          $scope.closeRegister();
+          $scope.closeLogin;
           $scope.handleError(e);
         });
 
@@ -41,7 +52,7 @@ angular.module('project_unify.controllers', [])
 
     // Display error
     $scope.handleError = function(e){
-      $scope.data = e;
+      $scope.errors = e;
       $scope.openError();
       console.log(e);
     };
@@ -52,7 +63,7 @@ angular.module('project_unify.controllers', [])
     };
 
     // Error modal
-    $ionicModal.fromTemplateUrl('templates/modals/error.html', {
+    $ionicModal.fromTemplateUrl('templates/modal/error.html', {
       scope: $scope,
       animation: 'slide-in-up'
     }).then(function (modal) {
