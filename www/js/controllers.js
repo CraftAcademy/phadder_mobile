@@ -1,6 +1,6 @@
 angular.module('project_unify.controllers', [])
 
-  .controller('LoginController', function ($scope, $rootScope, $state, $ionicModal, loginService, signUpService) {
+  .controller('LoginController', function ($scope, $rootScope, $state, $ionicModal, loginService, signUpService, facebookService) {
     $scope.performLogin = function (email, password) {
       loginService.save({user: {email: email, password: password}}, function (user) {
         $scope.closeLogin();
@@ -10,6 +10,13 @@ angular.module('project_unify.controllers', [])
 
     $scope.doSignUp = function (user_name, email, password, passwordConfirmation) {
       signUpService.save({user: {user_name: user_name, email: email, password: password, password_confirmation: passwordConfirmation}}, function(user){
+        $scope.closeRegister();
+        $scope.handleCurrentUser(user);
+      });
+    };
+
+    $scope.doFacebookSignUp = function() {
+      facebookService.get(function(user){
         $scope.closeRegister();
         $scope.handleCurrentUser(user);
       });

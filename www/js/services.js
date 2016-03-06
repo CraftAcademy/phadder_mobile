@@ -9,6 +9,10 @@ angular.module('project_unify.services', [])
     return $resource('https://unify-develop.herokuapp.com/api/v1/users/sign_in');
   })
 
+  .factory('facebookService', function ($resource) {
+    return $resource('https://unify-develop.herokuapp.com/api/v1/users/auth/facebook');
+  })
+
   .factory('Users', function () {
     // Might use a resource here that returns a JSON array
 

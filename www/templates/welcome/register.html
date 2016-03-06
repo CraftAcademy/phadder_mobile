@@ -23,11 +23,13 @@
       </label>
     </div>
 
-    <p class="light text-center">
+    <!--p class="light text-center">
       By signing up, you agree to the <br>Terms of Service & Privacy Policy
-    </p>
+    </p-->
 
     <button class="button button-block button-outline button-light" ng-click="doSignUp(data.name, data.email, data.password, data.password_confirmation)"><b>Join now</b></button>
+    <button class="button button-block button-dark" ng-click="doFacebookSignUp()"><b>Sign up with Facebook</b></button>
+
 
     <p class="light text-center">
       Already have an account? <a href="" class="light" ng-click="closeRegister(); openLogin()"><b>Sign in</b></a>
