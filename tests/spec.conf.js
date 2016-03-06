@@ -15,6 +15,7 @@ module.exports = function (config) {
     // list of files / patterns to load in the browser
     files: [
       //Angular/Ionic source
+      '../www/lib/karma-read-json/karma-read-json.js',
       '../www/lib/ionic/js/ionic.bundle.js',
       '../www/lib/ionic/js/angular/angular.js',
       '../www/lib/angular-ui-router/release/angular-ui-router.js',
@@ -24,7 +25,10 @@ module.exports = function (config) {
       '../www/js/*.js',
 
       //Test/Spec files
-      'specs/**/*.spec.js'
+      'specs/**/*.spec.js',
+
+      // fixtures
+      {pattern: 'fixtures/*.json', included: false}
     ],
 
 

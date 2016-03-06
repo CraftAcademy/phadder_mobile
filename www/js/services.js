@@ -16,21 +16,8 @@ angular.module('project_unify.services', [])
     return {}
   })
 
-  .factory('loginService', function ($http) {
-    return {
-      login: function (hash) {
-        console.log(hash);
-        $http({
-          method: 'POST',
-          url: 'https://unify-develop.herokuapp.com/api/v1/users/sign_in',
-          headers: {'HTTP-ACCEPT': 'application/json'},
-          data: hash
-        })
-          .then(function (response) {
-            return response.data.user;
-          });
-      }
-    }
+  .factory('loginService', function ($resource) {
+    return $resource('https://unify-develop.herokuapp.com/api/v1/users/sign_in');
   })
 
   .factory('Users', function () {

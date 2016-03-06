@@ -1,10 +1,12 @@
 angular.module('project_unify.controllers', [])
 
-  .controller('LoginController', function ($scope, $ionicModal, loginService) {
+  .controller('LoginController', function ($scope, $rootScope, $state, $ionicModal, loginService) {
     $scope.data = {};
-    $scope.performLogin = function() {
-      loginService.login({user:{email: $scope.data.username, password: $scope.data.password}});
-      console.log("LOGIN user: " + $scope.data.username + " - PW: " + $scope.data.password);
+    $scope.performLogin = function(email, password) {
+      $rootScope.currentUser = loginService.save({user:{email: email, password: password}});
+      $scope.closeLogin();
+      $state.go('tab.me');
+      console.log($rootScope.currentUser);
     };
 
     // Login modal
@@ -37,9 +39,10 @@ angular.module('project_unify.controllers', [])
   })
 
 
-  .controller('DemoCtrl', function ($scope, $ionicSideMenuDelegate, $ionicModal, Users, $ionicLoading, $state, $timeout, currentUser) {
+  .controller('DemoCtrl', function ($scope, $rootScope, $ionicSideMenuDelegate, $ionicModal, Users, $ionicLoading, $state, $timeout, currentUser) {
     $scope.users = Users.all();
-    $scope.currentUser = currentUser;
+    $scope.currentUser = $rootScope.currentUser.user;
+    console.log($scope.currentUser);
 
     $scope.toggleMenu = function () {
       $ionicSideMenuDelegate.toggleRight();

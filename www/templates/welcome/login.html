@@ -7,7 +7,7 @@
     <div class="list card">
       <label class="item item-input">
         <span class="input-label">Email</span>
-        <input type="email" ng-model="data.username" focus-me>
+        <input type="email" ng-model="data.email" focus-me>
       </label>
       <label class="item item-input">
       <span class="input-label">Password</span>
@@ -15,7 +15,7 @@
       </label>
     </div>
 
-    <button class="button button-block button-outline button-light" ng-click="performLogin()"><b>Sign in</b></button>
+    <button class="button button-block button-outline button-light" ng-click="performLogin(data.email, data.password)"><b>Sign in</b></button>
 
     <div class="light row">
       <div class="col">
