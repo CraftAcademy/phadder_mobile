@@ -5,6 +5,7 @@ angular.module('project_unify.controllers', [])
       loginService.save({user: {email: email, password: password}}, function (user) {
         $scope.closeLogin();
         $scope.handleCurrentUser(user);
+        $state.go('tab.myprofile');
       });
     };
 
@@ -119,11 +120,15 @@ angular.module('project_unify.controllers', [])
 
 
   .controller('DemoCtrl', function ($scope, $rootScope, $ionicSideMenuDelegate, $ionicModal, Users, $ionicLoading, $state, $timeout, unifyService, skillsService, userService) {
+    $scope.updateSkillList = function(user){
+      return user.skills.map(function(obj){return obj;}).join(', ');
+    };
     $scope.users = Users.all();
     $scope.currentUser = $rootScope.currentUser.user;
+    $scope.currentUser.skill_list = $scope.updateSkillList($scope.currentUser);
+
 
     $scope.unifyMe = function (id) {
-      var list = angular.element(document.querySelector('#list'));
       unifyService.get({id: id}, function (data) {
         $scope.matches = data.matches;
       });
@@ -131,13 +136,12 @@ angular.module('project_unify.controllers', [])
     };
 
     $scope.doSkillsUpdate = function (skills) {
-      console.log($scope.currentUser.id);
       skillsService.save({id: $scope.currentUser.id}, {skills: skills}, function () {
-        console.log($scope.currentUser);
         $scope.closeSkills();
       });
-      userService.get({id: $scope.currentUser.id}, function (responce) {
-        $scope.currentUser.skills = responce.user.skills;
+      userService.get({id: $scope.currentUser.id}, function (response) {
+        $scope.currentUser = response.user;
+        $scope.currentUser.skill_list = $scope.updateSkillList(response.user);
       });
     };
 
@@ -210,7 +214,7 @@ angular.module('project_unify.controllers', [])
     };
 
     // Skills modal
-    $ionicModal.fromTemplateUrl('templates/modal/skills.html', {
+    $ionicModal.fromTemplateUrl('templates/me/skills.html', {
       scope: $scope,
       animation: 'slide-in-up'
     }).then(function (modal) {

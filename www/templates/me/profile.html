@@ -5,12 +5,13 @@
         <button class="button button-icon ion-edit calm" ng-click="openSkills()"></button>
         <img gravatar-src="currentUser.email" class="avatar-profile">
         <h2 class="font-thin">{{currentUser.user_name}}</h2>
-        <p class="text-muted" ng-if="currentUser.mentor === true">Mentor</p>
+        <p class="text-muted">{{currentUser.mentor ? 'Mentor' : 'Mentee'}}</p>
         <div class="padding">
           <button class="button button-calm" ng-click="unifyMe(currentUser.id);">Unify me!</button>
         </div>
         <br>
-        <small ng-if="currentUser.skills.length"><strong>Skills: </strong>
+        <small ng-if="currentUser.skills.length">
+          <strong>Skills: </strong>
           <span ng-repeat="skill in currentUser.skills">{{skill}}, </span>
         </small>
       </div>
@@ -24,10 +25,10 @@
         <div class="row row-top">
           <p><i class="icon ion-person-stalker"></i> {{matches.length}} potential matches</p>
         </div>
-        <div class="item item-avatar" ng-repeat="item in matches">
+        <div class="item item-avatar" ng-repeat="match in matches">
           <img gravatar-src="item.user.email">
-          <h2>{{item.user.user_name}} </h2>
-          <small ng-repeat="skill in item.user.skills">{{skill}}
+          <h2>{{match.user.user_name}} </h2>
+          <small ng-repeat="skill in match.user.skills">{{skill}}
           </small>
         </div>
       </div>

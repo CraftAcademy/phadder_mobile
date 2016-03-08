@@ -1,0 +1,21 @@
+<ion-modal-view class="bg-gradient">
+  <ion-header-bar class="no-bg b-none">
+    <h1 class="title"></h1>
+    <button class="button button-icon button-clear button-light ion-android-close" ng-click="closeSkills()"></button>
+  </ion-header-bar>
+  <ion-content class="padding" style="color: white;">
+
+    <h3 style="color: white;">Add your interests</h3>
+    <small>Separate items with a comma.</small>
+    <textarea class='new-post' rows="10" type="text" ng-init="data.skills = currentUser.skill_list"
+              ng-model="data.skills"></textarea>
+
+
+    <button class="button button-block button-outline button-light" ng-click="doSkillsUpdate(data.skills)"><b>Update
+      skills</b></button>
+    <!--textarea class="new-post" rows="5" ng-model="data.skills" placeholder="Add your interests" ng-model="currentUser.skills"
+              focus-me></textarea-->
+
+
+  </ion-content>
+</ion-modal-view>
