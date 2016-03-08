@@ -2,7 +2,7 @@
   <ion-content class="stable-bg has-bg" ng-style="{'background-image': 'url(\'' + 'img/bg.png' + '\')'}">
     <div class="list card profile-top text-center">
       <div class="item item-text-wrap">
-        <button class="button button-icon ion-edit calm"></button>
+        <button class="button button-icon ion-edit calm" ng-click="openSkills()"></button>
         <img gravatar-src="currentUser.email" class="avatar-profile">
         <h2 class="font-thin">{{currentUser.user_name}}</h2>
         <p class="text-muted" ng-if="currentUser.mentor === true">Mentor</p>
@@ -10,7 +10,9 @@
           <button class="button button-calm" ng-click="unifyMe(currentUser.id);">Unify me!</button>
         </div>
         <br>
-        <p ng-repeat="skill in current_user.skills">{{skill}}</p>
+        <small ng-if="currentUser.skills.length"><strong>Skills: </strong>
+          <span ng-repeat="skill in currentUser.skills">{{skill}}, </span>
+        </small>
       </div>
     </div>
 
@@ -25,8 +27,7 @@
         <div class="item item-avatar" ng-repeat="item in matches">
           <img gravatar-src="item.user.email">
           <h2>{{item.user.user_name}} </h2>
-          <small ng-repeat="skill in item.user.skills">
-            {{skill}}
+          <small ng-repeat="skill in item.user.skills">{{skill}}
           </small>
         </div>
       </div>

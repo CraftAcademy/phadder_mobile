@@ -1,6 +1,6 @@
 angular.module('project_unify.controllers', [])
 
-  .controller('LoginController', function ($scope, $rootScope, $state, $ionicModal, loginService, signUpService, facebookService) {
+  .controller('LoginController', function ($scope, $rootScope, $state, $ionicModal, loginService, signUpService) {
     $scope.performLogin = function (email, password) {
       loginService.save({user: {email: email, password: password}}, function (user) {
         $scope.closeLogin();
@@ -9,7 +9,14 @@ angular.module('project_unify.controllers', [])
     };
 
     $scope.doSignUp = function (user_name, email, password, passwordConfirmation) {
-      signUpService.save({user: {user_name: user_name, email: email, password: password, password_confirmation: passwordConfirmation}}, function(user){
+      signUpService.save({
+        user: {
+          user_name: user_name,
+          email: email,
+          password: password,
+          password_confirmation: passwordConfirmation
+        }
+      }, function (user) {
         console.log(user);
         $scope.closeRegister();
         $scope.handleCurrentUser(user);
@@ -17,13 +24,13 @@ angular.module('project_unify.controllers', [])
     };
 
     // Facebook login - disabled
-    $scope.doFacebook = function() {
+    $scope.doFacebook = function () {
       facebookService.get({},
-        function(user) {
+        function (user) {
           // success
-          if(user.errors.length === 0) {
+          if (user.errors.length === 0) {
             console.log(user);
-            if($scope.modalLogin.isShown()){
+            if ($scope.modalLogin.isShown()) {
               $scope.closeLogin;
             } else {
               $scope.closeRegister();
@@ -32,7 +39,7 @@ angular.module('project_unify.controllers', [])
           } else {
             $scope.handleError(user);
           }
-        }, function(e) {
+        }, function (e) {
           //request errors
           $scope.closeRegister();
           $scope.closeLogin;
@@ -46,23 +53,22 @@ angular.module('project_unify.controllers', [])
     };
 
     // Perform User actions
-    $scope.handleCurrentUser = function(user) {
+    $scope.handleCurrentUser = function (user) {
       $rootScope.currentUser = user;
-      $rootScope.token = user.token;
       $scope.setToken(user);
       $state.go('tab.me');
       console.log($rootScope.currentUser);
     };
 
     // Display error
-    $scope.handleError = function(e){
+    $scope.handleError = function (e) {
       $scope.errors = e;
       $scope.openError();
       console.log(e);
     };
 
     // Set token
-    $scope.setToken = function(user){
+    $scope.setToken = function (user) {
       $rootScope.token = user.token;
     };
 
@@ -108,23 +114,31 @@ angular.module('project_unify.controllers', [])
     $scope.closeRegister = function () {
       $scope.modalRegister.hide();
     };
+
   })
 
 
-  .controller('DemoCtrl', function ($scope, $rootScope, $ionicSideMenuDelegate, $ionicModal, Users, $ionicLoading, $state, $timeout, unifyService) {
+  .controller('DemoCtrl', function ($scope, $rootScope, $ionicSideMenuDelegate, $ionicModal, Users, $ionicLoading, $state, $timeout, unifyService, skillsService, userService) {
     $scope.users = Users.all();
     $scope.currentUser = $rootScope.currentUser.user;
-    console.log($scope.currentUser);
 
     $scope.unifyMe = function (id) {
-      console.log('scope user email' + $scope.currentUser.email);
-      console.log('token:' + $scope.currentUser.token);
-      var list = angular.element( document.querySelector( '#list' ) );
-      unifyService.get({id: id}, function(data){
+      var list = angular.element(document.querySelector('#list'));
+      unifyService.get({id: id}, function (data) {
         $scope.matches = data.matches;
-        console.log(data.matches);
       });
 
+    };
+
+    $scope.doSkillsUpdate = function (skills) {
+      console.log($scope.currentUser.id);
+      skillsService.save({id: $scope.currentUser.id}, {skills: skills}, function () {
+        console.log($scope.currentUser);
+        $scope.closeSkills();
+      });
+      userService.get({id: $scope.currentUser.id}, function (responce) {
+        $scope.currentUser.skills = responce.user.skills;
+      });
     };
 
     $scope.toggleMenu = function () {
@@ -193,6 +207,20 @@ angular.module('project_unify.controllers', [])
     };
     $scope.closePost = function () {
       $scope.modalPost.hide();
+    };
+
+    // Skills modal
+    $ionicModal.fromTemplateUrl('templates/modal/skills.html', {
+      scope: $scope,
+      animation: 'slide-in-up'
+    }).then(function (modal) {
+      $scope.modalSkills = modal;
+    });
+    $scope.openSkills = function () {
+      $scope.modalSkills.show();
+    };
+    $scope.closeSkills = function () {
+      $scope.modalSkills.hide();
     };
 
 

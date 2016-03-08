@@ -29,6 +29,27 @@ angular.module('project_unify.services', [])
     return unify;
   })
 
+  .factory('skillsService', function ($rootScope, $resource) {
+    var skills = $resource('https://unify-develop.herokuapp.com/api/v1/skills/:id', {}, {
+      save: {
+        method: 'POST',
+        headers: {'X-User-Email': $rootScope.currentUser.user.email, 'X-User-Token': $rootScope.currentUser.user.token}
+      }
+    });
+
+    return skills;
+  })
+
+  .factory('userService', function($rootScope, $resource){
+    var headers =  {'X-User-Email': $rootScope.currentUser.user.email, 'X-User-Token': $rootScope.currentUser.user.token}
+    var user = $resource('https://unify-develop.herokuapp.com/api/v1/users/:id', {}, {
+      get: {
+        headers: headers
+      }
+    });
+    return user;
+  })
+
   .factory('Users', function () {
     // Might use a resource here that returns a JSON array
 
