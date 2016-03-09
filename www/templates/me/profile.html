@@ -2,7 +2,9 @@
   <ion-content class="stable-bg has-bg" ng-style="{'background-image': 'url(\'' + 'img/bg.png' + '\')'}">
     <div class="list card profile-top text-center">
       <div class="item item-text-wrap">
-        <button class="button button-icon ion-edit calm" ng-click="openSkills()" style="font-size: 10px;"> Edit profile</button>
+        <button class="button button-icon ion-edit calm" ng-click="openSkills()" ng-style="{'font-size': '12px'}"> Edit
+          profile
+        </button>
         <img gravatar-src="currentUser.email" class="avatar-profile">
         <h2 class="font-thin">{{currentUser.user_name}}</h2>
         <p class="text-muted">{{currentUser.mentor ? 'Mentor' : 'Mentee'}}</p>
