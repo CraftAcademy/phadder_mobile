@@ -7,7 +7,7 @@ angular.module('project_unify.controllers', [])
         $scope.handleCurrentUser(user);
         $state.go('tab.myprofile');
       }, function (response) {
-        $scope.statusText = response.statusText;
+        $scope.statusText = response.data.error;
       });
     };
 
@@ -105,6 +105,7 @@ angular.module('project_unify.controllers', [])
       $scope.modalLogin.show();
     };
     $scope.closeLogin = function () {
+      $scope.statusText = '';
       $scope.modalLogin.hide();
     };
 
@@ -119,6 +120,7 @@ angular.module('project_unify.controllers', [])
       $scope.modalRegister.show();
     };
     $scope.closeRegister = function () {
+      $scope.statusText = '';
       $scope.modalRegister.hide();
     };
 
