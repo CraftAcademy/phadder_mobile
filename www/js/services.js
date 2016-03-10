@@ -14,8 +14,8 @@ angular.module('project_unify.services', [])
     return $resource('https://unify-develop.herokuapp.com/api/v1/users/sign_in');
   })
 
-  .factory('facebookService', function ($resource) {
-    return $resource('https://unify-develop.herokuapp.com/api/v1/users/auth/facebook');
+  .factory('oauthService', function ($resource) {
+    return $resource('https://unify-develop.herokuapp.com/api/v1/users/auth/:provider');
   })
 
   .factory('unifyService', function ($rootScope, $resource) {

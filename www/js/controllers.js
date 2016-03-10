@@ -1,6 +1,6 @@
 angular.module('project_unify.controllers', [])
 
-  .controller('LoginController', function ($scope, $rootScope, $state, $ionicModal, loginService, signUpService) {
+  .controller('LoginController', function ($scope, $rootScope, $state, $ionicModal, loginService, signUpService, oauthService) {
     $scope.performLogin = function (email, password) {
       loginService.save({user: {email: email, password: password}}, function (user) {
         $scope.closeLogin();
@@ -26,7 +26,7 @@ angular.module('project_unify.controllers', [])
 
     // Facebook login - disabled
     $scope.doFacebook = function () {
-      facebookService.get({},
+      oauthService.get({provider: 'facebook'},
         function (user) {
           // success
           if (user.errors.length === 0) {
