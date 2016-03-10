@@ -6,6 +6,8 @@ angular.module('project_unify.controllers', [])
         $scope.closeLogin();
         $scope.handleCurrentUser(user);
         $state.go('tab.myprofile');
+      }, function (response) {
+        $scope.statusText = response.statusText;
       });
     };
 
@@ -21,16 +23,25 @@ angular.module('project_unify.controllers', [])
         console.log(user);
         $scope.closeRegister();
         $scope.handleCurrentUser(user);
+      }, function (response) {
+        var statusText = 'Errors: ';
+        for (var key in response.data.errors) {
+          var value = response.data.errors[key];
+          var new_key = key.toLowerCase().replace(/(?:^|\s|-)\S/g, function (c) {
+            return c.toUpperCase();
+          });
+          statusText = statusText + [new_key, value].join(' ') + ' ';
+        }
+        $scope.statusText = statusText
       });
     };
 
-    // Facebook login - disabled
+    // Facebook login
     $scope.doFacebook = function () {
       oauthService.get({provider: 'facebook'},
         function (user) {
           // success
           if (user.errors.length === 0) {
-            console.log(user);
             if ($scope.modalLogin.isShown()) {
               $scope.closeLogin;
             } else {
@@ -46,11 +57,6 @@ angular.module('project_unify.controllers', [])
           $scope.closeLogin;
           $scope.handleError(e);
         });
-
-      //facebookService.save(function(user){
-      //  $scope.closeRegister();
-      //  $scope.handleCurrentUser(user);
-      //});
     };
 
     // Perform User actions
@@ -120,8 +126,10 @@ angular.module('project_unify.controllers', [])
 
 
   .controller('DemoCtrl', function ($scope, $rootScope, $ionicSideMenuDelegate, $ionicModal, Users, $ionicLoading, $state, $timeout, unifyService, skillsService, userService) {
-    $scope.updateSkillList = function(user){
-      return user.skills.map(function(obj){return obj;}).join(', ');
+    $scope.updateSkillList = function (user) {
+      return user.skills.map(function (obj) {
+        return obj;
+      }).join(', ');
     };
     $scope.users = Users.all();
     $scope.currentUser = $rootScope.currentUser.user;
