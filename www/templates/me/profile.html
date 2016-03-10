@@ -16,9 +16,13 @@
           <strong>Skills: </strong>
           <span ng-repeat="skill in currentUser.skills">{{skill}}, </span>
         </small>
+        <ng-map class="map" center="currentUser.latitude, currentUser.longitude" zoom="15" disable-default-u-i="true">
+          <marker position="currentUser.latitude, currentUser.longitude" animation="Animation.BOUNCE" centered="true"
+                  dragglele="true" title="Current Position"></marker>
+        </ng-map>
+
       </div>
     </div>
-
     <div class="list card" id="list" ng-if="matches.length">
       <div class="item item-divider">
         My Unify matches

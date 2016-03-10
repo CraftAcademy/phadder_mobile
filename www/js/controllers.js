@@ -1,10 +1,22 @@
 angular.module('project_unify.controllers', [])
 
-  .controller('LoginController', function ($scope, $rootScope, $state, $ionicModal, loginService, signUpService, oauthService) {
+  .controller('LoginController', function ($scope, $rootScope, $cordovaGeolocation,  $state, $ionicModal, loginService, signUpService, oauthService) {
+    var posOptions = {timeout: 10000, enableHighAccuracy: false};
+    $cordovaGeolocation
+      .getCurrentPosition(posOptions)
+      .then(function (position) {
+        var lat  = position.coords.latitude;
+        var long = position.coords.longitude;
+        $scope.currentLocation = {latitude: lat, longitude: long}
+      }, function(err) {
+        // error
+      });
+
     $scope.performLogin = function (email, password) {
       loginService.save({user: {email: email, password: password}}, function (user) {
         $scope.closeLogin();
         $scope.handleCurrentUser(user);
+
         $state.go('tab.myprofile');
       }, function (response) {
         $scope.statusText = response.data.error;
@@ -62,6 +74,7 @@ angular.module('project_unify.controllers', [])
     // Perform User actions
     $scope.handleCurrentUser = function (user) {
       $rootScope.currentUser = user;
+      angular.extend($rootScope.currentUser.user, $scope.currentLocation);
       $scope.setToken(user);
       $state.go('tab.me');
       console.log($rootScope.currentUser);
@@ -127,7 +140,14 @@ angular.module('project_unify.controllers', [])
   })
 
 
-  .controller('DemoCtrl', function ($scope, $rootScope, $ionicSideMenuDelegate, $ionicModal, Users, $ionicLoading, $state, $timeout, unifyService, skillsService, userService) {
+  .controller('DemoCtrl', function ($scope, NgMap, $rootScope, $ionicSideMenuDelegate, $ionicModal, Users, $ionicLoading, $state, $timeout, unifyService, skillsService, userService) {
+    NgMap.getMap().then(function (map) {
+      console.log(map.getCenter());
+      console.log('markers', map.markers);
+      console.log('shapes', map.shapes);
+    });
+
+
     $scope.updateSkillList = function (user) {
       return user.skills.map(function (obj) {
         return obj;
