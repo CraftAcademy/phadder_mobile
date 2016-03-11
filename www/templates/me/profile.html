@@ -7,7 +7,7 @@
         </button>
         <img gravatar-src="currentUser.email" class="avatar-profile">
         <h2 class="font-thin">{{currentUser.user_name}}</h2>
-        <p class="text-muted">{{currentUser.mentor ? 'Mentor' : 'Mentee'}}</p>
+        <p class="text-muted">{{currentUser.mentor ? 'Mentor' : 'Mentee'}} <span ng-if="currentUser.city">- {{currentUser.city}}, {{currentUser.country}}</span></p>
         <div class="padding">
           <button class="button button-calm" ng-click="unifyMe(currentUser.id);">Unify me!</button>
         </div>
@@ -16,10 +16,10 @@
           <strong>Skills: </strong>
           <span ng-repeat="skill in currentUser.skills">{{skill}}, </span>
         </small>
-        <ng-map class="map" center="currentUser.latitude, currentUser.longitude" zoom="15" disable-default-u-i="true" scrollwheel="false">
+        <!--ng-map class="map" center="currentUser.latitude, currentUser.longitude" zoom="15" disable-default-u-i="true" scrollwheel="false">
           <marker position="currentUser.latitude, currentUser.longitude" animation="Animation.DROP" centered="true"
                   dragglele="true" title="Current Position"></marker>
-        </ng-map>
+        </ng-map-->
 
       </div>
     </div>
@@ -34,6 +34,8 @@
         <div class="item item-avatar" ng-repeat="match in matches">
           <img gravatar-src="item.user.email">
           <h2>{{match.user.user_name}} </h2>
+          <!-- We are not sending city and country -->
+          <small ng-if="match.user.city">{{match.user.city}}, {{match.user.country}} - </small>
           <small ng-repeat="skill in match.user.skills">{{skill}}
           </small>
         </div>

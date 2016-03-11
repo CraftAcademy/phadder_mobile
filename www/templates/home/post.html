@@ -1,39 +1,35 @@
-<ion-view cache-view="false">
-  <ion-nav-title>
-  </ion-nav-title>
-  <ion-nav-buttons side="secondary">
-    <button class="button button-icon ion-ios-more"></button>
-  </ion-nav-buttons>
+<ion-modal-view>
+  <ion-header-bar class="no-bg b-none">
+    <h1 class="title">Post</h1>
+    <button class="button button-icon button-clear button-light ion-android-close" ng-click="closeViewPost()"></button>
+  </ion-header-bar>
 
-  <ion-content class="has-footer">
+  <ion-content class="padding has-footer">
     <ion-refresher on-refresh="refresh()" pulling-icon="ion-chevron-up"></ion-refresher>
 
     <div class="list new-feeds">
       <div class="item item-avatar">
         <img src="img/adam.jpg">
-        <h2><b>{{currentUser.user_name}}</b></h2>
         <h2><b>{{selectedFeedItem.from.name}}</b></h2>
-        <p><time-ago from-time='{{ selectedFeedItem.created_time }}' format='MM/dd/yyyy'></time-ago></p>
+        <p><time-ago from-time="{{selectedFeedItem.created_time}}"></time-ago></p>
       </div>
 
       <div class="item item-body post-body">
-        <p class="post-text">{{selectedFeedItem.message}}
-          <span class="seemore">...see more</span>
-        </p>
+        <p class="post-text">{{selectedFeedItem.message}}</p>
       </div>
 
-      <div class="item item-image">
-        <img src="img/photo.jpg">
+      <div ng-if="selectedFeedItem.picture" class="item item-image">
+        <img ng-src="{{selectedFeedItem.picture}}">
       </div>
 
       <div class="item item-body post-body">
         <p>
-          <a href="" class="subdued">1 Like</a>·
-          <a href="" class="subdued">5 Comments</a>
+          <span ng-if="selectedFeedItem.likes.data.length > 0" class="subdued">{{selectedFeedItem.likes.data.length}} {{selectedFeedItem.likes.data.length < 1 ? 'Like' : 'Likes'}}</span>·
+          <span ng-if="selectedFeedItem.comments.data.length > 0" class="subdued">{{selectedFeedItem.comments.data.length}} {{selectedFeedItem.comments.data.length < 1 ? 'Comment' : 'Comments'}}</span>
         </p>
       </div>
 
-      <div class="item tabs tabs-secondary tabs-icon-left">
+      <!--div class="item tabs tabs-secondary tabs-icon-left">
         <a class="tab-item" href="">
           <i class="icon ion-thumbsup"></i>
           Like
@@ -46,39 +42,32 @@
           <i class="icon ion-share"></i>
           Share
         </a>
-      </div>
+      </div-->
 
-      <!-- Likers -->
-      <div class="item item-divider no-bg b-none">Likes</div>
-      <div class="likers padding">
-        <img class="liker" src="img/adam.jpg" alt="" ng-repeat="i in [0,1,2,3]">
-        <button class="button icon ion-more button-stable liker"></button>
-      </div>
 
       <!-- Comments -->
       <div class="item item-divider no-bg b-none">Comments</div>
-      <div class="item item-avatar" ng-repeat="i in [0,1,2]">
-        <img src="img/ben.png">
+      <div class="post-body" ng-repeat="comment in selectedFeedItem.comments.data">
         <div class="row no-padder">
           <div class="col-80">
-            <h2><b>Ben</b></h2>
+            <p><b>{{comment.from.name}}</b></p>
           </div>
           <div class="col-20 text-muted text-right">
-            {{$index + 1}}d
+            <time-ago from-time="{{comment.created_time}}" format='MM/dd/yyyy'></time-ago>
           </div>
         </div>
-        <p class="text-muted">Sales Executives</p>
-        <div class="dark text-wrap">That was so crowded there. They must love typography a lot!</div>
+        <div class="dark text-wrap">{{comment.message}}</div>
       </div>
+      <div class="item item-divider"></div>
     </div>
   </ion-content>
 
-  <div class="bar bar-footer sub-footer item-input-inset">
+  <!--div class="bar bar-footer sub-footer item-input-inset">
     <label class="item-input-wrapper">
       <input type="search" placeholder="Add a comment">
     </label>
     <button class="button button-clear">
       Submit
     </button>
-  </div>
-</ion-view>
+  </div-->
+</ion-modal-view>

@@ -24,14 +24,18 @@ angular.module('project_unify.controllers', [])
     };
 
     $scope.doSignUp = function (user_name, email, password, passwordConfirmation) {
-      signUpService.save({
+      attributes = {
         user: {
           user_name: user_name,
           email: email,
           password: password,
-          password_confirmation: passwordConfirmation
+          password_confirmation: passwordConfirmation,
+          latitude: $scope.currentLocation.latitude,
+          longitude: $scope.currentLocation.longitude
         }
-      }, function (user) {
+      };
+
+      signUpService.save(angular.extend(attributes), function (user) {
         console.log(user);
         $scope.closeRegister();
         $scope.handleCurrentUser(user);
@@ -44,7 +48,10 @@ angular.module('project_unify.controllers', [])
           });
           statusText = statusText + [new_key, value].join(' ') + ' ';
         }
-        $scope.statusText = statusText
+        $scope.statusText = statusText;
+        console.log(attributes.user);
+
+
       });
     };
 
@@ -161,9 +168,10 @@ angular.module('project_unify.controllers', [])
     //console.log($scope.activityFeed);
 
     $scope.selectFeed = function(item){
-      $state.go('tab.post');
+      //$state.go('tab.post');
       $scope.selectedFeedItem = item;
-      console.log($scope.selectedFeedItem.message);
+      console.log($scope.selectedFeedItem.created_time);
+      $scope.openViewPost();
     };
 
     $scope.updateSkillList = function (user) {
@@ -251,6 +259,20 @@ angular.module('project_unify.controllers', [])
     };
     $scope.closeAdd = function () {
       $scope.modalAdd.hide();
+    };
+
+    // View Post modal
+    $ionicModal.fromTemplateUrl('templates/home/post.html', {
+      scope: $scope,
+      animation: 'slide-in-up'
+    }).then(function (modal) {
+      $scope.modalViewPost = modal;
+    });
+    $scope.openViewPost = function () {
+      $scope.modalViewPost.show();
+    };
+    $scope.closeViewPost = function () {
+      $scope.modalViewPost.hide();
     };
 
     // New Post modal
