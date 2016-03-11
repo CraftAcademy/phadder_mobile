@@ -16,76 +16,33 @@
   <ion-content class="has-subheader stable-bg">
     <ion-refresher on-refresh="refresh()" pulling-icon="ion-chevron-up"></ion-refresher>
 
-    <div class="list card new-feeds" ng-repeat="item in [0,1,2,3,4,5,6,7,8]">
-      <div class="item" ng-if="$index%5 == 1">
-        <h2><b>Elvis Presley</b> likes this</h2>
-      </div>
-
+    <div class="list card new-feeds" ng-repeat="feedItem in activityFeed.feed">
       <div class="item item-avatar">
         <img src="img/adam.jpg">
-        <h2><b>Marty McFly</b></h2>
-        <p>Consultant - Hi-Tech - Executive Sales</p>
-        <p>2 min</p>
+        <h2><b>{{feedItem.from.name}}</b></h2>
+        <p><time-ago from-time='{{ feedItem.created_time }}' format='MM/dd/yyyy'></time-ago></p>
       </div>
 
-      <div class="item item-body post-body" ui-sref="tab.post({id: $index})">
+      <div class="item item-body post-body" ng-click="selectFeed(feedItem)">
         <p class="post-text">
-          It's here! Our latest Global Video Index is now available. This quarter we show <a href="">new trends</a> in mobile video consumption, engagement patterns by length of video, how sports publishers can grow viewers around gameday & how programmatic is
-          <span class="seemore">...see more</span>
+          {{feedItem.message | limitTo: 140 }}{{feedItem.message.length > 140 ? '...' : ''}}
         </p>
       </div>
 
-      <div class="item item-image" ng-if="$index%2 == 0">
-        <img src="img/photo.jpg">
+      <div ng-if="feedItem.picture" class="item item-image">
+        <img ng-src="{{feedItem.picture}}">
       </div>
 
       <div class="item item-body post-body">
-        <div class="list card post-inline" ng-if="$index%5 == 1">
-          <div class="item item-body post-body">
-            <p>What is the secret to rapid grow your app?</p>
-            <p class="post-text"><a href="">https://li.ti/u7d87f</a></p>
-          </div>
-
-          <div class="item item-image">
-            <img src="img/photo.jpg">
-          </div>
-
-          <div class="item item-body post-body">
-            <p><b>Download the app</b></p>
-          </div>
-        </div>
-
         <p>
-          <a href="" class="subdued">1 Like</a>·
-          <a href="" class="subdued">5 Comments</a>
+          <span ng-if="feedItem.likes.data.length > 0" class="subdued">{{feedItem.likes.data.length}} {{feedItem.likes.data.length < 1 ? 'Like' : 'Likes'}}</span>·
+          <span ng-if="feedItem.comments.data.length > 0" class="subdued">{{feedItem.comments.data.length}} {{feedItem.comments.data.length < 1 ? 'Comment' : 'Comments'}}</span>
         </p>
-      </div>
-
-      <div class="item tabs tabs-secondary tabs-icon-left">
-        <a class="tab-item" href="">
-          <i class="icon ion-thumbsup"></i>
-          Like
-        </a>
-        <a class="tab-item" href="">
-          <i class="icon ion-chatbox"></i>
-          Comment
-        </a>
-        <a class="tab-item" href="">
-          <i class="icon ion-share"></i>
-          Share
-        </a>
-      </div>
-
-      <!-- Latest comment -->
-      <div class="item item-avatar" ng-if="$index%5 == 1">
-        <img src="img/ben.png">
-        <h2><b>Ben</b></h2>
-        <p>That's cool my friends. Hope you're doing good</p>
       </div>
     </div>
 
     <!-- Recommended jobs -->
-    <div class="list card">
+    <!--div class="list card">
       <div class="item">
         <h2>Jobs recommended for you</h2>
       </div>
@@ -95,7 +52,7 @@
         <h2><b>Product Management Manager, Finance</b></h2>
         <p>ABB bank, Ho Chi Minh</p>
       </div>
-    </div>
+    </div-->
 
   </ion-content>
 </ion-view>

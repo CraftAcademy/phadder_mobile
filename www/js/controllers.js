@@ -140,13 +140,31 @@ angular.module('project_unify.controllers', [])
   })
 
 
-  .controller('DemoCtrl', function ($scope, NgMap, $rootScope, $ionicSideMenuDelegate, $ionicModal, Users, $ionicLoading, $state, $timeout, unifyService, skillsService, userService) {
+  .controller('DemoCtrl', function ($scope,
+                                    NgMap,
+                                    $rootScope,
+                                    $ionicSideMenuDelegate,
+                                    $ionicModal,
+                                    Users,
+                                    $ionicLoading,
+                                    $state,
+                                    $timeout,
+                                    unifyService,
+                                    skillsService,
+                                    userService,
+                                    feedService) {
     NgMap.getMap().then(function (map) {
       console.log(map.getCenter());
-      console.log('markers', map.markers);
-      console.log('shapes', map.shapes);
     });
 
+    $scope.activityFeed = feedService.get();
+    //console.log($scope.activityFeed);
+
+    $scope.selectFeed = function(item){
+      $state.go('tab.post');
+      $scope.selectedFeedItem = item;
+      console.log($scope.selectedFeedItem.message);
+    };
 
     $scope.updateSkillList = function (user) {
       return user.skills.map(function (obj) {
@@ -162,7 +180,6 @@ angular.module('project_unify.controllers', [])
       unifyService.get({id: id}, function (data) {
         $scope.matches = data.matches;
       });
-
     };
 
     $scope.doSkillsUpdate = function (skills) {
@@ -175,6 +192,13 @@ angular.module('project_unify.controllers', [])
       });
     };
 
+    //$scope.getFeed = function() {
+    //  feedService.get({}, function(response){
+    //    $scope.activityFeed = response;
+    //    console.log(response)
+    //  });
+    //};
+
     $scope.toggleMenu = function () {
       $ionicSideMenuDelegate.toggleRight();
     };
@@ -182,7 +206,7 @@ angular.module('project_unify.controllers', [])
     $scope.refresh = function () {
       // Stop the ion-refresher from spinning
       $scope.$broadcast('scroll.refreshComplete');
-    }
+    };
 
     $scope.goToHome = function () {
       $ionicLoading.show({
@@ -213,7 +237,7 @@ angular.module('project_unify.controllers', [])
           return true;
         }
       });
-    }
+    };
 
     // Add connection modal
     $ionicModal.fromTemplateUrl('templates/modal/new_connection.html', {

@@ -44,10 +44,21 @@ angular.module('project_unify.services', [])
     var headers =  {'X-User-Email': $rootScope.currentUser.user.email, 'X-User-Token': $rootScope.currentUser.user.token}
     var user = $resource('https://unify-develop.herokuapp.com/api/v1/users/:id', {}, {
       get: {
-        headers: headers
+        headers: headers,
       }
     });
     return user;
+  })
+
+
+  .factory('feedService', function($rootScope, $resource){
+    var headers =  {'X-User-Email': $rootScope.currentUser.user.email, 'X-User-Token': $rootScope.currentUser.user.token}
+    var feed = $resource('https://unify-develop.herokuapp.com/api/v1/activities', {}, {
+      get: {
+        headers: headers
+      }
+    });
+    return feed
   })
 
   .factory('Users', function () {
