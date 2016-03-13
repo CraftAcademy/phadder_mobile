@@ -1,6 +1,6 @@
 angular.module('project_unify.controllers', [])
 
-    .controller('LoginController', function ($q, $scope, $rootScope, $cordovaInAppBrowser, $cordovaGeolocation, $state, $ionicModal, loginService, signUpService, oauthService) {
+    .controller('LoginController', function ($q, $http, $scope, $rootScope, $cordovaInAppBrowser, $cordovaGeolocation, $state, $ionicModal, loginService, signUpService, oauthService) {
         var posOptions = {timeout: 10000, enableHighAccuracy: false};
         $cordovaGeolocation
             .getCurrentPosition(posOptions)
@@ -33,6 +33,21 @@ angular.module('project_unify.controllers', [])
                             access_token: parameterMap.access_token,
                             expires_in: parameterMap.expires_in
                         });
+                        $rootScope.accessToken = parameterMap.access_token;
+                        $scope.closeLogin();
+                        $scope.statusText = $rootScope.accessToken;
+                        //$scope.getMe($rootScope.accessToken).then(function(user){
+                        //    $scope.closeLogin();
+                        //    $scope.handleError(user);
+                        //});
+
+                        //.then(function (user) {
+                        //        //$scope.handleCurrentUser(user);
+                        //    $scope.handleError(user);
+                        //
+                        //    }
+                        //);
+                        //$state.go('tab.myprofile');
                     } else {
                         if ((event.url).indexOf("error_code=100") !== 0) {
                             deferred.reject("Facebook returned error_code=100: Invalid permissions");
@@ -40,8 +55,30 @@ angular.module('project_unify.controllers', [])
                             deferred.reject("Problem authenticating");
                         }
                     }
+
                 }
             })
+        };
+
+        $scope.getMe = function (token) {
+            var deferred = $q.defer();
+            var token = token;
+
+            $http.get("https://graph.facebook.com/v2.2/me", {
+                    params: {
+                        access_token: token,
+                        fields: "id,name,email,gender,location,website,picture",
+                        format: "json"
+                    }
+                })
+                .success(function(result) {
+                    deferred.resolve(result);
+                })
+                .error( function(error) {
+                    alert("Error: "+error);
+                    deferred.reject(false);
+                });
+            return deferred.promise;
         };
 
 
