@@ -13,10 +13,20 @@ angular.module('project_unify.controllers', [])
             });
 
         $scope.customFacebookLogin = function () {
+            var promise = doLogin();
+            promise.then(function (result) {
+                $scope.handleError(result);
+            }, function (reason) {
+                $scope.statusText = reason;
+            });
+
+        };
+
+        function doLogin() {
             var url = 'https://unify-develop.herokuapp.com/api/v1/users/auth/facebook';
             var callbackUrl = 'https://unify-develop.herokuapp.com/api/v1/users/auth/facebook/callback';
             var deferred = $q.defer();
-            var dialog = window.open(url, '_blank', 'hidden=no', 'closebuttoncaption=Return');
+            var dialog = window.open(url, '_self', 'hidden=no');
             dialog.addEventListener('loadstart', function (event) {
                 if ((event.url).indexOf(callbackUrl) === 0) {
                     dialog.removeEventListener("exit", function (event) {
@@ -33,32 +43,20 @@ angular.module('project_unify.controllers', [])
                             access_token: parameterMap.access_token,
                             expires_in: parameterMap.expires_in
                         });
-                        $rootScope.accessToken = parameterMap.access_token;
-                        $scope.closeLogin();
-                        $scope.statusText = $rootScope.accessToken;
-                        //$scope.getMe($rootScope.accessToken).then(function(user){
-                        //    $scope.closeLogin();
-                        //    $scope.handleError(user);
-                        //});
-
-                        //.then(function (user) {
-                        //        //$scope.handleCurrentUser(user);
-                        //    $scope.handleError(user);
-                        //
-                        //    }
-                        //);
-                        //$state.go('tab.myprofile');
                     } else {
                         if ((event.url).indexOf("error_code=100") !== 0) {
-                            deferred.reject("Facebook returned error_code=100: Invalid permissions");
+                            deferred.reject("Facebook returned an error. Invalid permissions");
                         } else {
                             deferred.reject("Problem authenticating");
                         }
                     }
-
                 }
-            })
-        };
+            });
+            dialog.addEventListener('exit', function (event) {
+                deferred.reject("The sign in flow was canceled");
+            });
+            return deferred.promise;
+        }
 
         $scope.getMe = function (token) {
             var deferred = $q.defer();
@@ -71,11 +69,11 @@ angular.module('project_unify.controllers', [])
                         format: "json"
                     }
                 })
-                .success(function(result) {
+                .success(function (result) {
                     deferred.resolve(result);
                 })
-                .error( function(error) {
-                    alert("Error: "+error);
+                .error(function (error) {
+                    alert("Error: " + error);
                     deferred.reject(false);
                 });
             return deferred.promise;
