@@ -14,8 +14,12 @@ angular.module('project_unify.controllers', [])
 
         $scope.customFacebookLogin = function () {
             var promise = doLogin();
-            promise.then(function (result) {
-                $scope.handleError(result);
+            console.log('calling doLogin();');
+            promise.then(function () {
+                console.log($scope.response);
+                $scope.handleCurrentUser($scope.response);
+                $scope.closeLogin();
+                $state.go('tab.myprofile');
             }, function (reason) {
                 $scope.statusText = reason;
             });
@@ -26,58 +30,33 @@ angular.module('project_unify.controllers', [])
             var url = 'https://unify-develop.herokuapp.com/api/v1/users/auth/facebook';
             var callbackUrl = 'https://unify-develop.herokuapp.com/api/v1/users/auth/facebook/callback';
             var deferred = $q.defer();
-            var dialog = window.open(url, '_self', 'hidden=no');
-            dialog.addEventListener('loadstart', function (event) {
+            var dialog = window.open(url, '_blank', 'hidden=no');
+
+            dialog.addEventListener("loadstop", function (event) {
                 if ((event.url).indexOf(callbackUrl) === 0) {
-                    dialog.removeEventListener("exit", function (event) {
-                    });
-                    dialog.close();
-                    var callbackResponse = (event.url).split("#")[1];
-                    var responseParameters = (callbackResponse).split("&");
-                    var parameterMap = [];
-                    for (var i = 0; i < responseParameters.length; i++) {
-                        parameterMap[responseParameters[i].split("=")[0]] = responseParameters[i].split("=")[1];
-                    }
-                    if (parameterMap.access_token !== undefined && parameterMap.access_token !== null) {
-                        deferred.resolve({
-                            access_token: parameterMap.access_token,
-                            expires_in: parameterMap.expires_in
-                        });
-                    } else {
-                        if ((event.url).indexOf("error_code=100") !== 0) {
-                            deferred.reject("Facebook returned an error. Invalid permissions");
-                        } else {
-                            deferred.reject("Problem authenticating");
+                    dialog.executeScript(
+                        {code: "document.getElementsByTagName('pre')[0].innerHTML"},
+                        function (values) {
+                            console.log(JSON.parse(values[0]));
+                            $scope.response = JSON.parse(values[0]);
+                            dialog.removeEventListener("exit", function (event) {
+                            });
+                            dialog.close();
+                        }, function (error ){
+                            deferred.reject("Problem authenticating" + error);
                         }
-                    }
+                    );
+                    console.log($scope.response);
+                    deferred.resolve({result: $scope.response});
+
                 }
             });
-            dialog.addEventListener('exit', function (event) {
+            dialog.addEventListener('exit', function () {
                 deferred.reject("The sign in flow was canceled");
             });
+            console.log(deferred.promise);
             return deferred.promise;
         }
-
-        $scope.getMe = function (token) {
-            var deferred = $q.defer();
-            var token = token;
-
-            $http.get("https://graph.facebook.com/v2.2/me", {
-                    params: {
-                        access_token: token,
-                        fields: "id,name,email,gender,location,website,picture",
-                        format: "json"
-                    }
-                })
-                .success(function (result) {
-                    deferred.resolve(result);
-                })
-                .error(function (error) {
-                    alert("Error: " + error);
-                    deferred.reject(false);
-                });
-            return deferred.promise;
-        };
 
 
         $scope.performLogin = function (email, password) {
@@ -123,36 +102,12 @@ angular.module('project_unify.controllers', [])
             });
         };
 
-        // Facebook login
-        $scope.doFacebook = function () {
-            oauthService.get({provider: 'facebook'},
-                function (user) {
-                    // success
-                    if (user.errors.length === 0) {
-                        if ($scope.modalLogin.isShown()) {
-                            $scope.closeLogin;
-                        } else {
-                            $scope.closeRegister();
-                        }
-                        $scope.handleCurrentUser(user);
-                    } else {
-                        $scope.handleError(user);
-                    }
-                }, function (e) {
-                    //request errors
-                    $scope.closeRegister();
-                    $scope.closeLogin;
-                    $scope.handleError(e);
-                });
-        };
-
         // Perform User actions
         $scope.handleCurrentUser = function (user) {
             $rootScope.currentUser = user;
-            angular.extend($rootScope.currentUser.user, $scope.currentLocation);
+            $rootScope.currentUser.user = angular.extend($rootScope.currentUser.user, $scope.currentLocation);
             $scope.setToken(user);
-            $state.go('tab.me');
-            console.log($rootScope.currentUser);
+            return $rootScope.currentUser.user;
         };
 
         // Display error
