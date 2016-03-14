@@ -14,9 +14,7 @@ angular.module('project_unify.controllers', [])
 
         $scope.customFacebookLogin = function () {
             var promise = doLogin();
-            console.log('calling doLogin();');
             promise.then(function () {
-                console.log($scope.response);
                 $scope.handleCurrentUser($scope.response);
                 $scope.closeLogin();
                 $state.go('tab.myprofile');
@@ -37,7 +35,6 @@ angular.module('project_unify.controllers', [])
                     dialog.executeScript(
                         {code: "document.getElementsByTagName('pre')[0].innerHTML"},
                         function (values) {
-                            console.log(JSON.parse(values[0]));
                             $scope.response = JSON.parse(values[0]);
                             dialog.removeEventListener("exit", function (event) {
                             });
@@ -46,15 +43,12 @@ angular.module('project_unify.controllers', [])
                             deferred.reject("Problem authenticating" + error);
                         }
                     );
-                    console.log($scope.response);
                     deferred.resolve({result: $scope.response});
-
                 }
             });
             dialog.addEventListener('exit', function () {
                 deferred.reject("The sign in flow was canceled");
             });
-            console.log(deferred.promise);
             return deferred.promise;
         }
 
