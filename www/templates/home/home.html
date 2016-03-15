@@ -29,8 +29,8 @@
         </p>
       </div>
 
-      <div ng-if="feedItem.picture" class="item item-image">
-        <img ng-src="{{feedItem.picture}}">
+      <div ng-if="feedItem.picture && feedItem.status_type !== 'shared_story' " class="item item-image">
+        <img ng-src="{{'https://graph.facebook.com/'+feedItem.object_id+'/picture'}}">
       </div>
 
       <div class="item item-body post-body">

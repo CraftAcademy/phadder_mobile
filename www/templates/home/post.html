@@ -11,15 +11,15 @@
       <div class="item item-avatar">
         <img src="img/adam.jpg">
         <h2><b>{{selectedFeedItem.from.name}}</b></h2>
-        <p><time-ago from-time="{{selectedFeedItem.created_time}}"></time-ago></p>
+        <p>{{selectedFeedItem.created_time | timeAgo}}</p>
       </div>
 
       <div class="item item-body post-body">
         <p class="post-text">{{selectedFeedItem.message}}</p>
       </div>
 
-      <div ng-if="selectedFeedItem.picture" class="item item-image">
-        <img ng-src="{{selectedFeedItem.picture}}">
+      <div ng-if="selectedFeedItem.picture && selectedFeedItem.status_type !== 'shared_story'" class="item item-image">
+        <img ng-src="{{'https://graph.facebook.com/'+selectedFeedItem.object_id+'/picture'}}">
       </div>
 
       <div class="item item-body post-body">
@@ -53,7 +53,7 @@
             <p><b>{{comment.from.name}}</b></p>
           </div>
           <div class="col-20 text-muted text-right">
-            <time-ago from-time="{{comment.created_time}}" format='MM/dd/yyyy'></time-ago>
+            <small>{{comment.created_time | timeAgo}}</small>
           </div>
         </div>
         <div class="dark text-wrap">{{comment.message}}</div>
