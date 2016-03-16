@@ -51,9 +51,9 @@ describe('LoginController', function () {
       expect(typeof $scope.doSignUp).toBe("function");
     });
 
-    it('should respond to #doFacebook', function () {
-      expect(typeof $scope.doFacebook).toBeDefined();
-      expect(typeof $scope.doFacebook).toBe("function");
+    it('should respond to #customFacebookLogin', function () {
+      expect(typeof $scope.customFacebookLogin).toBeDefined();
+      expect(typeof $scope.customFacebookLogin).toBe("function");
     });
 
     it('should respond to #handleCurrentUser', function () {
