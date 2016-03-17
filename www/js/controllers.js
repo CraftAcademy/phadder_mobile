@@ -196,8 +196,7 @@ angular.module('project_unify.controllers', [])
                                     unifyService,
                                     skillsService,
                                     userService,
-                                    feedService,
-                                    $ionicLoading) {
+                                    feedService) {
     NgMap.getMap().then(function (map) {
       console.log(map.getCenter());
     });
