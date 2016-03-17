@@ -8,7 +8,7 @@
     "ionic-ion-tinder-cards": "ionic-contrib-tinder-cards#*",
     "karma-read-json": "~1.1.0",
     "angular-resource": "latest",
-    "angular-gravatar": "latest",
+    "angular-gravatar": "^0.4.1",
     "angular-timeago": "^0.2.5"
   }
 }
