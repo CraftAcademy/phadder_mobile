@@ -222,7 +222,7 @@ angular.module('project_unify.controllers', [])
       $scope.showLoading('Please wait...');
       unifyService.get({id: id}, function (data) {
         $scope.matches = data.matches;
-        $scope.closeLoading();
+        $scope.hideLoading();
       });
     };
 
