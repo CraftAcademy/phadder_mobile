@@ -10,7 +10,8 @@ angular.module('project_unify.controllers', [])
                                            $ionicModal,
                                            loginService,
                                            signUpService,
-                                           $ionicLoading) {
+                                           $ionicLoading,
+                                           $stateParams) {
     var posOptions = {timeout: 10000, enableHighAccuracy: false};
     $cordovaGeolocation
       .getCurrentPosition(posOptions)
@@ -27,7 +28,7 @@ angular.module('project_unify.controllers', [])
       promise.then(function () {
         $scope.handleCurrentUser($scope.response);
         $scope.closeLogin();
-        $state.go('tab.myprofile');
+        $state.go('tab.profile');
       }, function (reason) {
         $scope.statusText = reason;
       });
@@ -67,7 +68,7 @@ angular.module('project_unify.controllers', [])
         $scope.closeLogin();
         $scope.handleCurrentUser(user);
 
-        $state.go('tab.myprofile');
+        $state.go('tab.profile', {user: $rootScope.currentUser.user});
       }, function (response) {
         $scope.statusText = response.data.error;
       });
@@ -196,15 +197,30 @@ angular.module('project_unify.controllers', [])
                                     unifyService,
                                     skillsService,
                                     userService,
-                                    feedService) {
+                                    feedService,
+                                    $stateParams,
+                                    $window) {
     NgMap.getMap().then(function (map) {
       console.log(map.getCenter());
     });
 
     $scope.activityFeed = feedService.get();
+    $scope.user = $stateParams.user;
 
     $scope.selectFeed = function (item) {
       $scope.openViewPost(item);
+    };
+
+    $scope.displayProfile = function (user) {
+      var displayUser = userService.get({id: user.id}, function(){
+        console.log(displayUser.user);
+        if (user.id == $scope.currentUser.id) {
+          $state.go('tab.profile', {user: $scope.currentUser}, {reload: true});
+        } else {
+          $state.go('tab.profile', {user: displayUser.user}, {reload: true});
+        }
+      });
+
     };
 
     $scope.updateSkillList = function (user) {

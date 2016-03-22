@@ -1,20 +1,28 @@
-<ion-view view-title="{{currentUser.user_name}}">
+<ion-view cache-view="false" view-title="{{user.user_name}}">
+  <ion-nav-bar class="bar-calm">
+  </ion-nav-bar>
+  <ion-nav-buttons  side="primary">
+    <button class="button" ng-if="user != currentUser" ng-click="displayProfile(currentUser)">
+      Back
+    </button>
+  </ion-nav-buttons>
   <ion-content class="stable-bg has-bg" ng-style="{'background-image': 'url(\'' + 'img/bg.png' + '\')'}">
     <div class="list card profile-top text-center">
       <div class="item item-text-wrap">
-        <button class="button button-icon ion-edit calm" ng-click="openSkills()" ng-style="{'font-size': '12px'}"> Edit
+        <button ng-if="user == currentUser" class="button button-icon ion-edit calm" ng-click="openSkills()" ng-style="{'font-size': '12px'}"> Edit
           profile
         </button>
         <img gravatar-src="currentUser.email" class="avatar-profile">
-        <h2 class="font-thin">{{currentUser.user_name}}</h2>
-        <p class="text-muted">{{currentUser.mentor ? 'Mentor' : 'Mentee'}} <span ng-if="currentUser.city">- {{currentUser.city}}, {{currentUser.country}}</span></p>
-        <div class="padding">
+        <h2 class="font-thin">{{user.user_name}}</h2>
+        <p class="text-muted">{{user.mentor ? 'Mentor' : 'Mentee'}} <span ng-if="user.city">- {{user.city}}, {{user.country}}</span></p>
+        <p ng-if="user.introduction" class="text-muted">{{user.introduction}}</p>
+        <div ng-if="user == currentUser" class="padding">
           <button class="button button-calm" ng-click="unifyMe(currentUser.id);">Unify me!</button>
         </div>
         <br>
-        <small ng-if="currentUser.skills.length">
+        <small ng-if="user.skills.length">
           <strong>Skills: </strong>
-          <span ng-repeat="skill in currentUser.skills">{{skill}}, </span>
+          <span ng-repeat="skill in user.skills">{{skill}}, </span>
         </small>
         <!--ng-map class="map" center="currentUser.latitude, currentUser.longitude" zoom="15" disable-default-u-i="true" scrollwheel="false">
           <marker position="currentUser.latitude, currentUser.longitude" animation="Animation.DROP" centered="true"
@@ -31,7 +39,7 @@
         <div class="row row-top">
           <p><i class="icon ion-person-stalker"></i> {{matches.length}} potential matches</p>
         </div>
-        <div class="item item-avatar" ng-repeat="match in matches">
+        <div class="item item-avatar" ng-repeat="match in matches" ng-click="displayProfile(match.user)">
           <img gravatar-src="item.user.email">
           <h2>{{match.user.user_name}} </h2>
           <!-- We are not sending city and country -->
@@ -151,7 +159,7 @@
       </div>
     </div-->
   </ion-content>
-  <div class="button-fab calm-bg box-shadow">
+  <!--div class="button-fab calm-bg box-shadow">
     <i class="icon ion-plus"></i>
-  </div>
+  </div-->
 </ion-view>

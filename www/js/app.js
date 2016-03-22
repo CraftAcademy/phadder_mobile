@@ -76,8 +76,11 @@ angular.module('project_unify', ['ionic', 'ngCordova', 'yaru22.angular-timeago',
         }
       })
 
-      .state('tab.myprofile', {
-        url: '/myprofile',
+      .state('tab.profile', {
+        url: '/profile/',
+        params: {
+          user: {}
+        },
         views: {
           'me': {
             templateUrl: 'templates/me/profile.html',
