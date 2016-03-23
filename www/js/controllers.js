@@ -17,10 +17,19 @@ angular.module('project_unify.controllers', [])
       $scope.data = {};
     });
 
+    $scope.getMessageCount = function (){
+      messageService.messageCount(function(data){
+        $scope.messageCount = data;
+      });
+      console.log($scope.messageCount);
+
+    };
+
 
     $scope.allMessages = function () {
       messageService.getConversations(function (data) {
         $scope.conversations = data.conversations;
+        console.log($scope.conversations);
       })
     };
 
@@ -68,6 +77,10 @@ angular.module('project_unify.controllers', [])
     $scope.$on('$ionicView.enter', function () {
       $scope.currentUser = $rootScope.currentUser.user;
       $scope.conversation = $stateParams.conversation;
+      console.log($scope.conversation.id);
+      messageService.updateMessageStatus({id: $scope.conversation.id}, function(response){
+        console.log(response);
+      });
     });
 
     $scope.sendReply = function (conversation, message) {

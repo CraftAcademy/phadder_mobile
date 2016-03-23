@@ -6,14 +6,17 @@
     <div class="list list-messages">
       <div class="item"  ng-repeat="conversation in conversations" ui-sref="chat({conversation: conversation})">
         <div class="row">
-          <div class="col-75">
+          <div class="col col-offset-5">
             <h2>{{conversation.from.user_name}}</h2>
             <p>
               {{conversation.subject}}
             </p>
           </div>
-          <div class="col-25 text-right text-muted">
-            Nov 3
+          <div class="col col-bottom text-right text-muted">
+            <small>
+              <time-ago from-time='{{ conversation.messages[0].sent }}' format='MM/dd/yyyy'></time-ago>
+            </small>
+
           </div>
         </div>
 

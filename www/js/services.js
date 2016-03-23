@@ -57,8 +57,8 @@ angular.module('project_unify.services', [])
       composeReply: function (data, callback) {
         $http.post(apiBase + '/conversations/reply', data, {headers: headers}).success(callback);
       },
-      updateMessage: function (callback) {
-        $http.post(apiBase + '/conversations/:id', data, {headers: headers}).success(callback);
+      updateMessageStatus: function (data, callback) {
+        $http.post(apiBase + '/conversations/update', data, {headers: headers}).success(callback);
       },
       messageCount: function (callback) {
         $http.get(apiBase + '/conversations/messages_count', {headers: headers}).success(callback);

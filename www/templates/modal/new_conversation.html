@@ -14,10 +14,7 @@
           <option ng-repeat="user in users.users" value="{{user.id}}">{{user.user_name}}</option>
         </select>
         <input name="subject" type="text" placeholder="Subject" ng-model="data.subject" focus-me>
-        <textarea name="body" class="new-post" rows="5" ng-model="data.body" placeholder="Message body"></textarea>
-        <div>{{data.recipient}}</div>
-        <div>{{data.subject}}</div>
-        <div>{{data.body}}</div>
+        <textarea name="body" class="new-post" rows="8" cols="10" ng-model="data.body" placeholder="Message body"></textarea>
       </div>
     </div>
   </ion-content>
