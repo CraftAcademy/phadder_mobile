@@ -1,32 +1,30 @@
-<ion-view view-title="Adam Something">
+<ion-view cache-view="false" view-title="{{conversation.subject}}">
   <ion-nav-buttons side="primary">
     <button class="button button-icon ion-ios-arrow-back" ui-sref="tab.messaging"></button>
-  </ion-nav-buttons>  
+  </ion-nav-buttons>
   <ion-nav-buttons side="secondary">
     <button class="button button-icon ion-ios-information-outline"></button>
   </ion-nav-buttons>
   <ion-content>
-    <div class="list list-bubble">
-      <div class="card bubble-to">
-        <div class="item item-text-wrap stable-bg">
+    <div class="list list-bubble" ng-repeat="message in conversation.messages.slice().reverse()">
+      <div ng-class="message.sender === currentUser.user_name ? 'bubble-to' : 'bubble-from'" class="card">
+        <div ng-class="message.sender === currentUser.user_name ? 'stable-bg' : 'calm-bg'" class="item item-text-wrap">
           <p>
-            Hi Hieu,  
-            <br>
-            I think you are ideal candidate, might I receive your resume and invite you to the interview by this week?  
-            <br>
-            Many Thanks,
+            {{message.body}}
           </p>
         </div>
       </div>
-      <div class="text-muted time-to">10:22am</div>
+      <div ng-class="message.sender === currentUser.user_name ? 'time-to' : 'time-from'" class="text-muted">
+        <time-ago from-time='{{ message.sent }}' format='MM/dd/yyyy'></time-ago>
+      </div>
+    </div>
 
-
-      <div class="card bubble-from">
+      <!--div class="card bubble-from">
         <div class="item item-text-wrap calm-bg">
           <p>
-            Hi, 
+            Hi,
             <br>
-            Thanks for reaching out. I only have my linkedin profile updated so can you take it? And which company do you refer to?  
+            Thanks for reaching out. I only have my linkedin profile updated so can you take it? And which company do you refer to?
             <br>
             Cheers,
           </p>
@@ -37,23 +35,23 @@
       <div class="card bubble-to">
         <div class="item item-text-wrap stable-bg">
           <p>
-            Hi,  
+            Hi,
             <br>
             I would like to take it as your latest resume. I come from a head hunting company...
           </p>
         </div>
       </div>
-      <div class="text-muted time-to">1:22pm</div>
-      
-    </div>
+      <div class="text-muted time-to">1:22pm</div-->
+
+
   </ion-content>
   <ion-footer-bar class="bar-light item-input-inset b-t">
-    <button class="button button-clear button-icon ion-camera">
-    </button>
+    <!--button class="button button-clear button-icon ion-camera">
+    </button-->
     <label class="item-input-wrapper no-bg">
-      <input type="search" placeholder="Add a message" ng-model="query" ng-init="query=''">
+      <input type="search" placeholder="Add a message" ng-model="newMessage" ng-init="newMessage=''">
     </label>
-    <button class="button button-clear button-icon ion-android-send button-calm">
+    <button class="button button-clear button-icon ion-android-send button-calm" ng-click="sendReply(conversation, newMessage)">
     </button>
   </ion-footer-bar>
 </ion-view>

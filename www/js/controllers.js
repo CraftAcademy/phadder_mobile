@@ -1,5 +1,58 @@
 angular.module('project_unify.controllers', [])
 
+  .controller('MessageCtrl', function ($scope,
+                                       $rootScope,
+                                       $stateParams,
+                                       $state,
+                                       messageService) {
+
+    $scope.$on('$ionicView.enter', function () {
+      $scope.currentUser = $rootScope.currentUser.user;
+      $scope.allMessages();
+    });
+
+    $scope.allMessages = function () {
+      messageService.getConversations(function (data) {
+        $scope.conversations = data.conversations;
+        //console.log($scope.conversations);
+      })
+    };
+
+    $scope.openChat = function (conversation) {
+      $state.go('chat', {conversation: conversation});
+      console.log(conversation);
+
+    };
+  })
+
+  .controller('chatCtrl', function($scope,
+                                   $rootScope,
+                                   $stateParams,
+                                   $state,
+                                   messageService){
+    $scope.$on('$ionicView.enter', function () {
+      $scope.currentUser = $rootScope.currentUser.user;
+      $scope.conversation = $stateParams.conversation;
+      console.log($scope.conversation);
+    });
+
+    $scope.sendMessage = function(conversation, message){
+      var receiver_id = conversation.from.id;
+      var subject = conversation.subject;
+      messageService.composeMessage({receiver_id: receiver_id, subject: subject, message: message}, function(data){
+        console.log(data);
+      });
+    }
+
+    $scope.sendReply = function(conversation, message){
+      var conversation_id = conversation.id;
+      var subject = conversation.subject;
+      messageService.composeReply({conversation_id: conversation_id, subject: subject, message: message}, function(data){
+        console.log(data);
+      });
+    }
+  })
+
   .controller('LoginController', function ($q,
                                            $http,
                                            $scope,
@@ -198,8 +251,7 @@ angular.module('project_unify.controllers', [])
                                     skillsService,
                                     userService,
                                     feedService,
-                                    $stateParams,
-                                    $window) {
+                                    $stateParams) {
     NgMap.getMap().then(function (map) {
       console.log(map.getCenter());
     });
@@ -212,7 +264,7 @@ angular.module('project_unify.controllers', [])
     };
 
     $scope.displayProfile = function (user) {
-      var displayUser = userService.get({id: user.id}, function(){
+      var displayUser = userService.get({id: user.id}, function () {
         console.log(displayUser.user);
         if (user.id == $scope.currentUser.id) {
           $state.go('tab.profile', {user: $scope.currentUser}, {reload: true});

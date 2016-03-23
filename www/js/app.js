@@ -104,19 +104,22 @@ angular.module('project_unify', ['ionic', 'ngCordova', 'yaru22.angular-timeago',
         views: {
           'messaging': {
             templateUrl: 'templates/messaging/messaging.html',
-            controller: 'DemoCtrl'
+            controller: 'MessageCtrl'
           }
         }
       })
 
       .state('chat', {
-        url: '/chat',
-        // views: {
-        //   'messaging': {
-        templateUrl: 'templates/messaging/chat.html',
-        controller: 'DemoCtrl'
-        //   }
-        // }
+        url: '/chat/',
+        views: {
+          '': {
+            templateUrl: 'templates/messaging/chat.html',
+            controller: 'chatCtrl'
+          }
+        },
+        params: {
+          conversation: {}
+        }
       })
 
       .state('tab.network', {
