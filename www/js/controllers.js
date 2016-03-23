@@ -25,31 +25,53 @@ angular.module('project_unify.controllers', [])
     };
   })
 
-  .controller('chatCtrl', function($scope,
-                                   $rootScope,
-                                   $stateParams,
-                                   $state,
-                                   messageService){
+  .controller('chatCtrl', function ($scope,
+                                    $rootScope,
+                                    $stateParams,
+                                    $state,
+                                    $filter,
+                                    messageService) {
     $scope.$on('$ionicView.enter', function () {
       $scope.currentUser = $rootScope.currentUser.user;
       $scope.conversation = $stateParams.conversation;
       console.log($scope.conversation);
     });
 
-    $scope.sendMessage = function(conversation, message){
+    $scope.sendMessage = function (conversation, message) {
       var receiver_id = conversation.from.id;
       var subject = conversation.subject;
-      messageService.composeMessage({receiver_id: receiver_id, subject: subject, message: message}, function(data){
+      messageService.composeMessage({receiver_id: receiver_id, subject: subject, message: message}, function (data) {
         console.log(data);
       });
     }
 
-    $scope.sendReply = function(conversation, message){
+    $scope.sendReply = function (conversation, message) {
       var conversation_id = conversation.id;
       var subject = conversation.subject;
-      messageService.composeReply({conversation_id: conversation_id, subject: subject, message: message}, function(data){
-        console.log(data);
+      messageService.composeReply({
+        conversation_id: conversation_id,
+        subject: subject,
+        message: message
+      }, function (data) {
+        $scope.conversations = null;
+        $scope.newMessage = null;
+        messageService.getConversations(function (response) {
+            $scope.conversations = response.conversations;
+            var new_conversation = getById($scope.conversations, conversation_id);
+            $state.go($state.current, {conversation: new_conversation}, {reload: true});
+          }
+        );
+
+
       });
+
+      function getById(arr, id) {
+        for (var d = 0, len = arr.length; d < len; d += 1) {
+          if (arr[d].id === id) {
+            return arr[d];
+          }
+        }
+      }
     }
   })
 
