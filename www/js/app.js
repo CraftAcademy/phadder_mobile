@@ -6,7 +6,7 @@
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
 angular.module('project_unify', ['ionic', 'ngCordova', 'yaru22.angular-timeago', 'ngMap', 'project_unify.controllers', 'project_unify.services', 'project_unify.directives', 'ionic.contrib.ui.tinderCards', 'ngResource', 'ui.gravatar'])
-
+  .constant('API_URL', 'https://unify-develop.herokuapp.com/api/v1')
   .run(function ($ionicPlatform) {
     $ionicPlatform.ready(function () {
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard

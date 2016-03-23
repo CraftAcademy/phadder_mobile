@@ -4,25 +4,59 @@ angular.module('project_unify.controllers', [])
                                        $rootScope,
                                        $stateParams,
                                        $state,
+                                       $ionicModal,
+                                       userService,
                                        messageService) {
 
     $scope.$on('$ionicView.enter', function () {
       $scope.currentUser = $rootScope.currentUser.user;
       $scope.allMessages();
+      userService.get({}, function (users) {
+        $scope.users = users;
+      });
+      $scope.data = {};
     });
+
 
     $scope.allMessages = function () {
       messageService.getConversations(function (data) {
         $scope.conversations = data.conversations;
-        //console.log($scope.conversations);
       })
     };
 
+    $scope.sendMessage = function () {
+      var recipient = $scope.data.recipient;
+      var subject = $scope.data.subject;
+      var body = $scope.data.body;
+      var request = {receiver_id: recipient, subject: subject, message: body};
+      messageService.composeMessage(request, function (data) {
+        messageService.getConversations(function (response) {
+            $scope.conversations = response.conversations;
+            $scope.closeNewConversation();
+          }
+        );
+      });
+    };
+
+
     $scope.openChat = function (conversation) {
       $state.go('chat', {conversation: conversation});
-      console.log(conversation);
-
     };
+
+    // New Messsage modal
+    $ionicModal.fromTemplateUrl('templates/modal/new_conversation.html', {
+      scope: $scope,
+      animation: 'slide-in-up'
+    }).then(function (modal) {
+      $scope.modalNewConversation = modal;
+    });
+    $scope.openNewConversation = function () {
+      $scope.modalNewConversation.show();
+    };
+    $scope.closeNewConversation = function () {
+      $scope.modalNewConversation.hide();
+    };
+
   })
 
   .controller('chatCtrl', function ($scope,
@@ -34,16 +68,7 @@ angular.module('project_unify.controllers', [])
     $scope.$on('$ionicView.enter', function () {
       $scope.currentUser = $rootScope.currentUser.user;
       $scope.conversation = $stateParams.conversation;
-      console.log($scope.conversation);
     });
-
-    $scope.sendMessage = function (conversation, message) {
-      var receiver_id = conversation.from.id;
-      var subject = conversation.subject;
-      messageService.composeMessage({receiver_id: receiver_id, subject: subject, message: message}, function (data) {
-        console.log(data);
-      });
-    }
 
     $scope.sendReply = function (conversation, message) {
       var conversation_id = conversation.id;
@@ -162,7 +187,6 @@ angular.module('project_unify.controllers', [])
       };
 
       signUpService.save(angular.extend(attributes), function (user) {
-        console.log(user);
         $scope.closeRegister();
         $scope.handleCurrentUser(user);
       }, function (response) {
@@ -175,9 +199,6 @@ angular.module('project_unify.controllers', [])
           statusText = statusText + [new_key, value].join(' ') + ' ';
         }
         $scope.statusText = statusText;
-        console.log(attributes.user);
-
-
       });
     };
 
@@ -193,7 +214,6 @@ angular.module('project_unify.controllers', [])
     $scope.handleError = function (e) {
       $scope.errors = e;
       $scope.openError();
-      console.log(e);
     };
 
     // Set token
@@ -287,7 +307,6 @@ angular.module('project_unify.controllers', [])
 
     $scope.displayProfile = function (user) {
       var displayUser = userService.get({id: user.id}, function () {
-        console.log(displayUser.user);
         if (user.id == $scope.currentUser.id) {
           $state.go('tab.profile', {user: $scope.currentUser}, {reload: true});
         } else {
@@ -324,13 +343,6 @@ angular.module('project_unify.controllers', [])
         $scope.currentUser.skill_list = $scope.updateSkillList(response.user);
       });
     };
-
-    //$scope.getFeed = function() {
-    //  feedService.get({}, function(response){
-    //    $scope.activityFeed = response;
-    //    console.log(response)
-    //  });
-    //};
 
     $scope.toggleMenu = function () {
       $ionicSideMenuDelegate.toggleRight();

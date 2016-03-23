@@ -1,8 +1,8 @@
 angular.module('project_unify.services', [])
 
 
-  .factory('signUpService', function ($resource) {
-    return $resource('https://unify-develop.herokuapp.com/api/v1/users', {}, {
+  .factory('signUpService', function ($resource, API_URL) {
+    return $resource(API_URL + '/users', {}, {
       save: {
         method: "POST",
         headers: {HTTP_ACCEPT: 'application/json'}
@@ -10,16 +10,16 @@ angular.module('project_unify.services', [])
     });
   })
 
-  .factory('loginService', function ($resource) {
-    return $resource('https://unify-develop.herokuapp.com/api/v1/users/sign_in');
+  .factory('loginService', function ($resource, API_URL) {
+    return $resource(API_URL + '/users/sign_in');
   })
 
-  .factory('oauthService', function ($resource) {
-    return $resource('https://unify-develop.herokuapp.com/api/v1/users/auth/:provider');
+  .factory('oauthService', function ($resource, API_URL) {
+    return $resource(API_URL + '/users/auth/:provider');
   })
 
-  .factory('unifyService', function ($rootScope, $resource) {
-    var unify = $resource('https://unify-develop.herokuapp.com/api/v1/unify/:id', {}, {
+  .factory('unifyService', function ($rootScope, $resource, API_URL) {
+    var unify = $resource(API_URL + '/unify/:id', {}, {
       get: {
         method: 'GET',
         headers: {'X-User-Email': $rootScope.currentUser.user.email, 'X-User-Token': $rootScope.currentUser.user.token}
@@ -29,8 +29,8 @@ angular.module('project_unify.services', [])
     return unify;
   })
 
-  .factory('skillsService', function ($rootScope, $resource) {
-    var skills = $resource('https://unify-develop.herokuapp.com/api/v1/skills/:id', {}, {
+  .factory('skillsService', function ($rootScope, $resource, API_URL) {
+    var skills = $resource(API_URL + '/skills/:id', {}, {
       save: {
         method: 'POST',
         headers: {'X-User-Email': $rootScope.currentUser.user.email, 'X-User-Token': $rootScope.currentUser.user.token}
@@ -40,11 +40,12 @@ angular.module('project_unify.services', [])
     return skills;
   })
 
-  .factory('messageService', function ($resource, $rootScope, $http) {
-    var apiBase = 'https://unify-develop.herokuapp.com/api/v1/mailbox';
+  .factory('messageService', function ($resource, $rootScope, $http, API_URL) {
+    var apiBase = API_URL + '/mailbox';
     var headers = {
       'X-User-Email': $rootScope.currentUser.user.email,
-      'X-User-Token': $rootScope.currentUser.user.token
+      'X-User-Token': $rootScope.currentUser.user.token,
+      HTTP_ACCEPT: 'application/json'
     };
     return {
       getConversations: function (callback) {
@@ -57,17 +58,17 @@ angular.module('project_unify.services', [])
         $http.post(apiBase + '/conversations/reply', data, {headers: headers}).success(callback);
       },
       updateMessage: function (callback) {
-        $http.post('https://unify-develop.herokuapp.com/api/v1/mailbox/conversations/:id', data, {headers: headers}).success(callback);
+        $http.post(apiBase + '/conversations/:id', data, {headers: headers}).success(callback);
       },
       messageCount: function (callback) {
-        $http.get('https://unify-develop.herokuapp.com/api/v1/mailbox/conversations/messages_count', {headers: headers}).success(callback);
+        $http.get(apiBase + '/conversations/messages_count', {headers: headers}).success(callback);
       }
     }
   })
 
-  .factory('userService', function ($rootScope, $resource) {
+  .factory('userService', function ($rootScope, $resource, API_URL) {
     var headers = {'X-User-Email': $rootScope.currentUser.user.email, 'X-User-Token': $rootScope.currentUser.user.token}
-    var user = $resource('https://unify-develop.herokuapp.com/api/v1/users/:id', {}, {
+    var user = $resource(API_URL + '/users/:id', {}, {
       get: {
         headers: headers
       }
@@ -76,9 +77,9 @@ angular.module('project_unify.services', [])
   })
 
 
-  .factory('feedService', function ($rootScope, $resource) {
+  .factory('feedService', function ($rootScope, $resource, API_URL) {
     var headers = {'X-User-Email': $rootScope.currentUser.user.email, 'X-User-Token': $rootScope.currentUser.user.token}
-    var feed = $resource('https://unify-develop.herokuapp.com/api/v1/activities', {}, {
+    var feed = $resource(API_URL + '/activities', {}, {
       get: {
         headers: headers
       }

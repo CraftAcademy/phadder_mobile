@@ -1,0 +1,31 @@
+<ion-modal-view>
+  <ion-header-bar class="bar-calm">
+    <button class="button button-clear" ng-click="closeNewConversation()">
+      <i class="icon ion-android-close"></i>
+    </button>
+    <div class="h1 title">New Message</div>
+  </ion-header-bar>
+  <ion-content>
+    <div class="list">
+
+      <div class="item item-text-wrap b-none">
+        <label> Send to: </label>
+        <select name="recipient" ng-model="data.recipient">
+          <option ng-repeat="user in users.users" value="{{user.id}}">{{user.user_name}}</option>
+        </select>
+        <input name="subject" type="text" placeholder="Subject" ng-model="data.subject" focus-me>
+        <textarea name="body" class="new-post" rows="5" ng-model="data.body" placeholder="Message body"></textarea>
+        <div>{{data.recipient}}</div>
+        <div>{{data.subject}}</div>
+        <div>{{data.body}}</div>
+      </div>
+    </div>
+  </ion-content>
+  <ion-footer-bar class="bar-stable">
+    <div class="row row-nopadding">
+      <div class="col-33 text-right">
+        <button class="button button-outline button-calm" ng-click="sendMessage()">Send</button>
+      </div>
+    </div>
+  </ion-footer-bar>
+</ion-modal-view>
