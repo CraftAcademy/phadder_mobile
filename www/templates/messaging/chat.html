@@ -45,13 +45,13 @@
 
 
   </ion-content>
-  <ion-footer-bar class="bar-light item-input-inset b-t">
+  <ion-footer-bar class="bar-light item-input-inset b-t" ng-form="messageForm">
     <!--button class="button button-clear button-icon ion-camera">
     </button-->
     <label class="item-input-wrapper no-bg">
-      <input type="search" placeholder="Add a message" ng-model="newMessage" ng-init="newMessage=''">
+      <input type="search" placeholder="Add a message" ng-model="newMessage" ng-init="newMessage=''" required>
     </label>
-    <button class="button button-clear button-icon ion-android-send button-calm" ng-click="sendReply(conversation, newMessage)">
+    <button class="button button-clear button-icon ion-android-send button-calm" ng-click="sendReply(conversation, newMessage)" ng-disabled="messageForm.$invalid">
     </button>
   </ion-footer-bar>
 </ion-view>
