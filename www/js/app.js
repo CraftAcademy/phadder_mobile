@@ -5,8 +5,14 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('project_unify', ['ionic', 'ngCordova', 'yaru22.angular-timeago', 'ngMap', 'project_unify.controllers', 'project_unify.services', 'project_unify.directives', 'ionic.contrib.ui.tinderCards', 'ngResource', 'ui.gravatar'])
+
+var projectUnify = angular.module('project_unify', ['ionic','ionic.service.core', 'ngCordova', 'yaru22.angular-timeago', 'ngMap', 'project_unify.controllers', 'project_unify.services', 'project_unify.directives', 'ionic.contrib.ui.tinderCards', 'ngResource', 'ui.gravatar'])
+projectUnify.config(function ($ionicConfigProvider) {
+    $ionicConfigProvider.tabs.position('bottom');
+  })
+
   .constant('API_URL', 'https://unify-develop.herokuapp.com/api/v1')
+
   .run(function ($ionicPlatform) {
     $ionicPlatform.ready(function () {
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -128,6 +134,16 @@ angular.module('project_unify', ['ionic', 'ngCordova', 'yaru22.angular-timeago',
           'network': {
             templateUrl: 'templates/network/network.html',
             controller: 'DemoCtrl'
+          }
+        }
+      })
+
+      .state('tab.system', {
+        url: '/system',
+        views: {
+          'system': {
+            templateUrl: 'templates/system/system.html',
+            controller: 'SystemCtrl'
           }
         }
       })

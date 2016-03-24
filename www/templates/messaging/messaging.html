@@ -14,7 +14,7 @@
           </div>
           <div class="col col-bottom text-right text-muted">
             <small>
-              <time-ago from-time='{{ conversation.messages[0].sent }}' format='MM/dd/yyyy'></time-ago>
+              <time-ago from-time='{{ conversation.messages[conversation.messages.length-1].sent }}' format='MM/dd/yyyy'></time-ago>
             </small>
 
           </div>
