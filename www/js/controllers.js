@@ -5,6 +5,7 @@ angular.module('project_unify.controllers', [])
                                        $stateParams,
                                        $state,
                                        $ionicModal,
+                                       $timeout,
                                        userService,
                                        messageService) {
 
@@ -16,6 +17,18 @@ angular.module('project_unify.controllers', [])
       });
       $scope.data = {};
     });
+
+    (function tick() {
+      messageService.messageCount(function (data) {
+        $scope.messageCount = data;
+      });
+      messageService.getConversations(function (data) {
+        $scope.conversations = data.conversations;
+        console.log($scope.conversations);
+      });
+      $timeout(tick, 20000);
+
+    })();
 
     $scope.getMessageCount = function () {
       messageService.messageCount(function (data) {
