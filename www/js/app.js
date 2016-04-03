@@ -120,7 +120,7 @@ projectUnify.config(function ($ionicConfigProvider) {
         views: {
           '': {
             templateUrl: 'templates/messaging/chat.html',
-            controller: 'chatCtrl'
+            controller: 'ChatCtrl'
           }
         },
         params: {
@@ -176,4 +176,19 @@ angular.module('ui.gravatar').config([
   }
 ]);
 
+document.addEventListener('deviceready', function () {
+  // Enable to debug issues.
+  // window.plugins.OneSignal.setLogLevel({logLevel: 4, visualLevel: 4});
+
+  var notificationOpenedCallback = function(jsonData) {
+    console.log('didReceiveRemoteNotificationCallBack: ' + JSON.stringify(jsonData));
+  };
+
+  window.plugins.OneSignal.init("873dc99c-6398-4181-938f-036786442158",
+    {googleProjectNumber: ""},
+    notificationOpenedCallback);
+
+  // Show an alert box if a notification comes in when the user is in your app.
+  window.plugins.OneSignal.enableInAppAlertNotification(true);
+}, false);
 
