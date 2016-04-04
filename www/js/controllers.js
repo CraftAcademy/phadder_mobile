@@ -1,5 +1,12 @@
 angular.module('project_unify.controllers', [])
 
+  .controller('FriendshipCtrl', function ($rootScope, $scope, friendshipService) {
+    $scope.sendFriendshipRequest = function (user) {
+      friendshipService.get({friend_id: user.id}, function (data) {
+        console.log(data);
+      });
+    }
+  })
 
   //Rename this to application controller and split up?
   .controller('DemoCtrl', function ($scope,

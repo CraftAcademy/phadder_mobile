@@ -85,6 +85,16 @@ angular.module('project_unify.services', [])
       }
     });
     return feed
+  })
+
+  .factory('friendshipService', function ($rootScope, $resource, API_URL) {
+    var headers = {'X-User-Email': $rootScope.currentUser.user.email, 'X-User-Token': $rootScope.currentUser.user.token}
+    var friendship = $resource(API_URL + '/user/' + $rootScope.currentUser.user.id + '/friendship/:friend_id ', {}, {
+      get: {
+        headers: headers
+      }
+    });
+    return friendship
   });
 
 
