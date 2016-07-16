@@ -10,18 +10,18 @@ module.exports = function (config) {
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
     frameworks: ['jasmine-jquery', 'jasmine'],
-    
+
     // list of files / patterns to load in the browser
     files: [
       // Load jQuery from CDN if not using it as a framework
       //'https://code.jquery.com/jquery-3.1.0.min.js',
       //Angular/Ionic sources (we need to add all dependencies).
-      '../www/lib/angular/angular.js',
+      //'../www/lib/angular/angular.js',
+      '../www/lib/ionic/js/ionic.bundle.js',
       '../www/lib/angular-ui-router/release/angular-ui-router.js',
       '../www/lib/angular-mocks/angular-mocks.js',
       '../www/lib/angular-resource/angular-resource.js',
       '../www/lib/karma-read-json/karma-read-json.js',
-      '../www/lib/ionic/js/ionic.bundle.js',
       '../www/lib/ionic-platform-web-client/dist/ionic.io.bundle.js',
       '../www/lib/ngCordova/dist/ng-cordova.js',
       '../www/lib/angular-timeago/dist/angular-timeago.js',
