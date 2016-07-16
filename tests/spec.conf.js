@@ -107,7 +107,7 @@ module.exports = function (config) {
       }
     }
   });
-  if (process.env.TRAVIS) {
+  if (process.env.SEMAPHORE) {
     config.browsers = ['chromeTravisCI'];
   }
 }
