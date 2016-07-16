@@ -9,13 +9,13 @@ module.exports = function (config) {
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['jasmine'],
+    frameworks: ['jasmine-jquery', 'jasmine'],
 
 
     // list of files / patterns to load in the browser
     files: [
-      // Load jQuery from CDN
-      'https://code.jquery.com/jquery-3.1.0.min.js',
+      // Load jQuery from CDN if not using it as a framework
+      //'https://code.jquery.com/jquery-3.1.0.min.js',
       //Angular/Ionic sources (we need to add all dependencies).
       '../www/lib/karma-read-json/karma-read-json.js',
       '../www/lib/ionic/js/ionic.bundle.js',
@@ -67,6 +67,7 @@ module.exports = function (config) {
 
     plugins: [
       'karma-jasmine',
+      'karma-jasmine-jquery',
       'karma-chrome-launcher',
       'karma-coverage',
       'karma-coveralls',
