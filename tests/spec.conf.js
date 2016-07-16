@@ -14,17 +14,23 @@ module.exports = function (config) {
 
     // list of files / patterns to load in the browser
     files: [
-      //Angular/Ionic source
+      // Load jQuery from CDN
+      'https://code.jquery.com/jquery-3.1.0.min.js',
+      //Angular/Ionic sources (we need to add all dependencies).
       '../www/lib/karma-read-json/karma-read-json.js',
       '../www/lib/ionic/js/ionic.bundle.js',
-      '../www/lib/ionic/js/angular/angular.js',
+      '../www/lib/ionic-platform-web-client/dist/ionic.io.bundle.min.js',
+      '../www/lib/ngCordova/dist/ng-cordova.js',
+      '../www/lib/angular/angular.js',
+      '../www/lib/angular-timeago/dist/angular-timeago.js',
+      '../www/lib/ngmap/build/scripts/ng-map.min.js',
       '../www/lib/angular-ui-router/release/angular-ui-router.js',
       '../www/lib/angular-mocks/angular-mocks.js',
       '../www/lib/angular-resource/angular-resource.js',
       '../www/lib/angular-gravatar/build/angular-gravatar.js',
 
-      //App code
-      '../www/js/*.js',
+      //App code (load all js files)
+      '../www/js/**/*.js',
 
       //Test/Spec files
       'specs/**/*.spec.js',

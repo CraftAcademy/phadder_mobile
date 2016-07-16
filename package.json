@@ -17,6 +17,7 @@
     "cucumber": "^0.9.5",
     "gulp-util": "^2.2.14",
     "jasmine-core": "^2.4.1",
+    "jasmine-spec-reporter": "^2.5.0",
     "karma": "^0.13.21",
     "karma-chrome-launcher": "^0.2.2",
     "karma-coverage": "^0.5.3",
