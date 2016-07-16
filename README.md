@@ -1,4 +1,5 @@
 # Mobile Client for Project Unify
+[![Build Status](https://semaphoreci.com/api/v1/agileventures/project_unify_mobile/branches/develop/badge.svg)](https://semaphoreci.com/agileventures/project_unify_mobile)
 
 ### Features
 #### Main
