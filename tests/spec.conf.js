@@ -89,25 +89,22 @@ module.exports = function (config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['Chrome'],
+    browsers: ['customChrome'],
 
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
     singleRun: false,
 
-    // Concurrency level
-    // how many browser should be started simultaneous
-    concurrency: Infinity,
-    //  Custom launcher for Travis-CI
     customLaunchers: {
-      chromeTravisCI: {
+      customChrome: {
         base: 'Chrome',
-        flags: ['--no-sandbox']
+        flags: ['--no-sandbox', '--disable-web-security'],
+        displayName: 'Chrome w/o security'
       }
     }
   });
   if (process.env.SEMAPHORE) {
-    config.browsers = ['chromeTravisCI'];
+    config.browsers = ['customChrome'];
   }
 }
