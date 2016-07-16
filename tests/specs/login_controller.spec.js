@@ -15,9 +15,13 @@ describe('LoginController', function () {
     $scope = $rootScope.$new();
     httpBackend = $httpBackend;
     var valid_response = readJSON('fixtures/current_user.json');
-    httpBackend.whenGET(/.*/).respond(
-      200, valid_response
-    );
+    httpBackend
+      .whenGET(/.*/)
+      .respond(200, valid_response);
+
+    httpBackend
+      .when('POST', 'https://unify-develop.herokuapp.com/api/v1/users/sign_in')
+      .respond(valid_response);
 
     controller = $controller('LoginController', {
       $scope: $scope,
@@ -28,9 +32,7 @@ describe('LoginController', function () {
 
     });
 
-    httpBackend
-      .when('POST', 'https://unify-develop.herokuapp.com/api/v1/users/sign_in')
-      .respond(valid_response);
+
   }));
 
 
