@@ -19,7 +19,7 @@ module.exports = function (config) {
       //Angular/Ionic sources (we need to add all dependencies).
       '../www/lib/karma-read-json/karma-read-json.js',
       '../www/lib/ionic/js/ionic.bundle.js',
-      '../www/lib/ionic-platform-web-client/dist/ionic.io.bundle.min.js',
+      '../www/lib/ionic-platform-web-client/dist/ionic.io.bundle.js',
       '../www/lib/ngCordova/dist/ng-cordova.js',
       '../www/lib/angular/angular.js',
       '../www/lib/angular-timeago/dist/angular-timeago.js',
