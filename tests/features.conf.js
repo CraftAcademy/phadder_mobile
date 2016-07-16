@@ -1,3 +1,4 @@
+
 exports.config = {
   capabilities: {
     'browserName': 'phantomjs',
@@ -8,7 +9,15 @@ exports.config = {
   specs: [
     'features/**/*.feature.js'
   ],
+
   jasmineNodeOpts: {
-    isVerbose: true
+    isVerbose: true,
+    print: function() {}
+  },
+
+  onPrepare: function() {
+    var SpecReporter = require('jasmine-spec-reporter');
+    // add jasmine spec reporter
+    jasmine.getEnv().addReporter(new SpecReporter({displayStacktrace: 'all'}));
   }
 };

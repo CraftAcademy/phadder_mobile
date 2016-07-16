@@ -9,22 +9,27 @@ module.exports = function (config) {
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['jasmine'],
-
-
+    frameworks: ['jasmine-jquery', 'jasmine'],
+    
     // list of files / patterns to load in the browser
     files: [
-      //Angular/Ionic source
-      '../www/lib/karma-read-json/karma-read-json.js',
-      '../www/lib/ionic/js/ionic.bundle.js',
-      '../www/lib/ionic/js/angular/angular.js',
+      // Load jQuery from CDN if not using it as a framework
+      //'https://code.jquery.com/jquery-3.1.0.min.js',
+      //Angular/Ionic sources (we need to add all dependencies).
+      '../www/lib/angular/angular.js',
       '../www/lib/angular-ui-router/release/angular-ui-router.js',
       '../www/lib/angular-mocks/angular-mocks.js',
       '../www/lib/angular-resource/angular-resource.js',
+      '../www/lib/karma-read-json/karma-read-json.js',
+      '../www/lib/ionic/js/ionic.bundle.js',
+      '../www/lib/ionic-platform-web-client/dist/ionic.io.bundle.js',
+      '../www/lib/ngCordova/dist/ng-cordova.js',
+      '../www/lib/angular-timeago/dist/angular-timeago.js',
+      '../www/lib/ngmap/build/scripts/ng-map.min.js',
       '../www/lib/angular-gravatar/build/angular-gravatar.js',
 
-      //App code
-      '../www/js/*.js',
+      //App code (load all js files)
+      '../www/js/**/*.js',
 
       //Test/Spec files
       'specs/**/*.spec.js',
@@ -61,6 +66,7 @@ module.exports = function (config) {
 
     plugins: [
       'karma-jasmine',
+      'karma-jasmine-jquery',
       'karma-chrome-launcher',
       'karma-coverage',
       'karma-coveralls',
@@ -83,25 +89,22 @@ module.exports = function (config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['Chrome'],
+    browsers: ['customChrome'],
 
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
     singleRun: false,
 
-    // Concurrency level
-    // how many browser should be started simultaneous
-    concurrency: Infinity,
-    //  Custom launcher for Travis-CI
     customLaunchers: {
-      chromeTravisCI: {
+      customChrome: {
         base: 'Chrome',
-        flags: ['--no-sandbox']
+        flags: ['--no-sandbox', '--disable-web-security'],
+        displayName: 'Chrome w/o security'
       }
     }
   });
-  if (process.env.TRAVIS) {
-    config.browsers = ['chromeTravisCI'];
+  if (process.env.SEMAPHORE) {
+    config.browsers = ['customChrome'];
   }
 }

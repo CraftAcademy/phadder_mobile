@@ -1,6 +1,5 @@
 describe('LoginController', function () {
 
-
   var $scope, controller, httpBackend, $rootScope, loginService;
 
   beforeEach(module('project_unify'));
@@ -16,18 +15,24 @@ describe('LoginController', function () {
     $scope = $rootScope.$new();
     httpBackend = $httpBackend;
     var valid_response = readJSON('fixtures/current_user.json');
-    httpBackend.whenGET(/.*/).respond(
-      valid_response
-    );
+    httpBackend
+      .whenGET(/.*/)
+      .respond(200, valid_response);
+
+    httpBackend
+      .when('POST', 'https://unify-develop.herokuapp.com/api/v1/users/sign_in')
+      .respond(valid_response);
 
     controller = $controller('LoginController', {
       $scope: $scope,
       $state: $state,
       $ionicModal: $ionicModal,
-      $rootScope: $rootScope,
-      loginService: loginService
+      $rootScope: $rootScope
+      //loginService: loginService
 
     });
+
+
   }));
 
 
@@ -72,27 +77,24 @@ describe('LoginController', function () {
     });
 
     xit('should have a $rootScope.currentUser object', function () {
-      expect(typeof $rootScope.currentUser).toBeDefined();
-      expect(typeof $rootScope.currentUser).toBe("object");
+
     });
 
-
-    describe('when initialized', function () {
-      xit('#currentUser is empty', function () {
-        expect($rootScope.currentUser).toBe(null);
-      });
-    });
 
     describe('#performLogin', function () {
 
       beforeEach(function () {
-          loginService.save({user: {email: 'random@random.com', token: 'xxxxxx'}});
-          httpBackend.flush();
+          httpBackend.expectPOST('https://unify-develop.herokuapp.com/api/v1/users/sign_in');
+          $scope.performLogin('random@random.com', 'password');
+          //httpBackend.flush();
         }
       );
 
       xit('should return a user object', function () {
-        expect($rootScope.currentUser.user_name).toBe('Thomas Ochman');
+        console.log($rootScope.currentUser);
+        expect(typeof $rootScope.currentUser).toBeDefined();
+        expect(typeof $rootScope.currentUser).toBe("object");
+        expect($rootScope.currentUser.user_name).toBe('Random Guy');
       });
 
 

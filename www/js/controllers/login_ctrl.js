@@ -10,6 +10,7 @@ projectUnify.controller('LoginController', function ($q,
                                                      signUpService,
                                                      $ionicLoading,
                                                      $stateParams) {
+  //$rootScope.currentUser = {};
   var posOptions = {timeout: 10000, enableHighAccuracy: false};
   $cordovaGeolocation
     .getCurrentPosition(posOptions)
@@ -104,6 +105,7 @@ projectUnify.controller('LoginController', function ($q,
   // Perform User actions
   $scope.handleCurrentUser = function (user) {
     $rootScope.currentUser = user;
+    console.log($rootScope.currentUser);
     $rootScope.currentUser.user = angular.extend($rootScope.currentUser.user, $scope.currentLocation);
     $scope.setToken(user);
     return $rootScope.currentUser.user;
