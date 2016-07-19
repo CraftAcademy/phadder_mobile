@@ -30,11 +30,12 @@ Finish the process by updating the `$ionicCoreSettings factory.
 
 ```shell
 $ ionic config build
-```
+````
+Note that without taking this step you might encounter errors while running unit tests. 
 
 ### Tests
 
-We are using Karma runner with Jasmine and Protractor 
+We are using Karma runner with Jasmine for unit tests and Protractor (also using Jasmine) for acceptance tests
 
 
 Running unit tests:
@@ -46,3 +47,7 @@ To run acceptance tests make sure that you run `$ ionic serve` and execute the t
 ```
 $ protractor tests/features.conf.js
 ```
+
+Test coverage is measured with Coveralls
+
+[![Coverage Status](https://coveralls.io/repos/github/AgileVentures/project_unify_mobile/badge.svg?branch=master)](https://coveralls.io/github/AgileVentures/project_unify_mobile?branch=develop)
