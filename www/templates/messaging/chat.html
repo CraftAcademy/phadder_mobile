@@ -60,9 +60,13 @@
               required
               msd-elastic>
       </textarea>
-    <button class="button button-clear button-icon ion-android-send button-calm"
-            ng-click="sendReply(conversation, newMessage)"
-            ng-disabled="messageForm.$invalid">
-    </button>
+
+
+    <div class="footer-btn-wrap">
+      <button class="button button-clear button-icon ion-android-send button-calm footer-btn"
+              ng-click="sendReply(conversation, newMessage)"
+              ng-disabled="messageForm.$invalid">
+      </button>
+    </div>
   </ion-footer-bar>
 </ion-view>
