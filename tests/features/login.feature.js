@@ -21,7 +21,16 @@ describe('Login feature', function () {
 
   describe('login', function () {
     beforeEach(function(){
-      browser.get('/#/welcome');
+      browser.get('/#');
+      signUpButton.click();
+      browser.debugger();
+      usernameField.sendKeys('thomas@craftacademy.se');
+      passwordField.sendKeys('password');
+      loginButton.click();
+    });
+
+    it('logs in with valid credentials', function(){
+      expect(browser.getLocationAbsUrl()).toMatch('/welcome');
     })
   });
 

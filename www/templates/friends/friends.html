@@ -1,0 +1,41 @@
+<ion-view cache-view="false" view-title="Friends">
+  <ion-content class="stable-bg">
+    <div class="list list-friends">
+      <div class="item item-divider">Friends:</div>
+      <div
+        class="item item-avatar"
+        ng-repeat="friend in friends"
+        ng-controller="DemoCtrl"
+        ng-click="displayProfile(friend)">
+        <img gravatar-src="friend.email">
+        <h2>{{friend.user_name}} </h2>
+        <small ng-if="friend.city">{{friend.city}}, {{friend.country}} -</small>
+        <small ng-repeat="skill in friend.skills">{{skill}}</small>
+      </div>
+    </div>
+    <div class="list list-friends">
+      <div ng-if="pendingFriends" class="item item-divider">You have pending friend requests from:</div>
+      <div class="item item-avatar"
+           ng-repeat="friend in pendingFriends"
+           ng-controller="DemoCtrl"
+           ng-click="displayProfile(friend)">
+        <img gravatar-src="item.user.email">
+        <h2>{{friend.user_name}} </h2>
+        <small ng-if="friend.city">{{friend.city}}, {{friend.country}}</small>
+        <small ng-repeat="skill in friend.skills">{{skill}}</small>
+        <button style='float: right; top: -15px;'
+                class="button button-icon calm"
+                ng-controller="FriendshipCtrl"
+                ng-click="confirmFriendshipRequest(friend)"
+                ng-style="{'font-size': '12px'}">Accept request
+        </button>
+        <button style='float: right; top: -15px;'
+                class="button button-icon calm"
+                ng-controller="FriendshipCtrl"
+                ng-click="blockFriendshipRequest(friend)"
+                ng-style="{'font-size': '12px'}">Block
+        </button>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

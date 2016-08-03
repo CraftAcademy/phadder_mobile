@@ -67,7 +67,10 @@ angular.module('project_unify.services', [])
   })
 
   .factory('userService', function ($rootScope, $resource, API_URL) {
-    var headers = {'X-User-Email': $rootScope.currentUser.user.email, 'X-User-Token': $rootScope.currentUser.user.token}
+    var headers = {
+      'X-User-Email': $rootScope.currentUser.user.email,
+      'X-User-Token': $rootScope.currentUser.user.token
+    };
     var user = $resource(API_URL + '/users/:id', {}, {
       get: {
         headers: headers
@@ -78,7 +81,10 @@ angular.module('project_unify.services', [])
 
 
   .factory('feedService', function ($rootScope, $resource, API_URL) {
-    var headers = {'X-User-Email': $rootScope.currentUser.user.email, 'X-User-Token': $rootScope.currentUser.user.token}
+    var headers = {
+      'X-User-Email': $rootScope.currentUser.user.email,
+      'X-User-Token': $rootScope.currentUser.user.token
+    };
     var feed = $resource(API_URL + '/activities', {}, {
       get: {
         headers: headers
@@ -87,14 +93,76 @@ angular.module('project_unify.services', [])
     return feed
   })
 
+  .factory('friendService', function ($rootScope, $resource, $http, API_URL) {
+    // I usually use $resource for my api calls.
+    var headers = {
+      'X-User-Email': $rootScope.currentUser.user.email,
+      'X-User-Token': $rootScope.currentUser.user.token
+    };
+    // var friendship = $resource(API_URL + '/user/' + $rootScope.currentUser.user.id + '/pending_friendships/index ', {}, {
+    //   get: {
+    //     headers: headers
+    //   }
+    // });
+    var apiUrl = API_URL + '/user/' + $rootScope.currentUser.user.id + '/pending_friendships/index';
+    return {
+      friends: function (callback) {
+        var friendsUrl = API_URL + '/user/' + $rootScope.currentUser.user.id + '/friendships/index';
+        $http.get(friendsUrl, {headers: headers}).success(callback);
+      },
+      pendingFriends: function (callback) {
+        $http.get(apiUrl, {headers: headers}).success(callback);
+      },
+      acceptFriend: function (friend_id, callback) {
+        var acceptFriendUrl = API_URL + '/user/' + $rootScope.currentUser.user.id + '/friendship/' + friend_id + '/confirm';
+        $http.get(acceptFriendUrl, {headers: headers}).success(callback);
+      },
+      blockFriend: function (friend_id, callback) {
+        var blockFriendUrl = API_URL + '/user/' + $rootScope.currentUser.user.id + '/friendship/' + friend_id + '/block';
+        $http.get(blockFriendUrl, {headers: headers}).success(callback);
+      }
+    }
+  })
+
   .factory('friendshipService', function ($rootScope, $resource, API_URL) {
-    var headers = {'X-User-Email': $rootScope.currentUser.user.email, 'X-User-Token': $rootScope.currentUser.user.token}
+    var headers = {
+      'X-User-Email': $rootScope.currentUser.user.email,
+      'X-User-Token': $rootScope.currentUser.user.token
+    };
     var friendship = $resource(API_URL + '/user/' + $rootScope.currentUser.user.id + '/friendship/:friend_id ', {}, {
       get: {
         headers: headers
       }
     });
     return friendship
+  })
+
+  .service('friendshipStatusService', function ($rootScope) {
+    var currentUser = $rootScope.currentUser.user;
+
+    this.isFriend = function (user) {
+      return user.friends.map(function (u) {
+        return u.id;
+      }).includes(currentUser.id);
+    };
+
+    this.hasInvitedCurrentUser = function (user) {
+      return user.pending_invited_friendships.map(function (u) {
+        return u.id;
+      }).includes(currentUser.id);
+    };
+
+    this.pending = function (user) {
+      return user.pending_friendships.map(function (u) {
+        return u.id;
+      }).includes(currentUser.id);
+    };
+
+    this.blockedByCurrentUser = function (user) {
+      return user.blocked_by_current_user;
+    }
+
   });
+
 
 

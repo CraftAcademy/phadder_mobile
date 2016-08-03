@@ -1,9 +1,24 @@
 angular.module('project_unify.controllers', [])
 
-  .controller('FriendshipCtrl', function ($rootScope, $scope, friendshipService) {
+  .controller('FriendshipCtrl', function ($rootScope, $scope, friendshipService, friendService) {
     $scope.sendFriendshipRequest = function (user) {
       friendshipService.get({friend_id: user.id}, function (data) {
-        console.log(data);
+        $rootScope.friendship_request_message = data.message;
+        $rootScope.requestJustSent = true;
+      });
+    }
+
+    $scope.confirmFriendshipRequest = function (user) {
+      friendService.acceptFriend(user.id, function (data) {
+        $rootScope.friendship_confirmation_message = data.message;
+        $rootScope.justConfirmedFriendship = true;
+      });
+    }
+
+    $scope.blockFriendshipRequest = function (user) {
+      friendService.blockFriend(user.id, function (data) {
+        $rootScope.friendship_block_message = data.message;
+        $rootScope.justBlockedFriendship = true;
       });
     }
   })
@@ -21,10 +36,18 @@ angular.module('project_unify.controllers', [])
                                     skillsService,
                                     userService,
                                     feedService,
-                                    $stateParams) {
+                                    $stateParams,
+                                    friendshipStatusService) {
     NgMap.getMap().then(function (map) {
       console.log(map.getCenter());
     });
+
+    $rootScope.friendship_block_message = undefined;
+    $rootScope.friendship_request_message = undefined;
+    $rootScope.friendship_confirmation_message = undefined;
+    $rootScope.requestJustSent = false;
+    $rootScope.justBlockedFriendship = false;
+    $rootScope.justConfirmedFriendship = false;
 
     $scope.activityFeed = feedService.get();
     $scope.user = $stateParams.user;
@@ -52,6 +75,13 @@ angular.module('project_unify.controllers', [])
     $scope.currentUser = $rootScope.currentUser.user;
     $scope.currentUser.skill_list = $scope.updateSkillList($scope.currentUser);
 
+    //horrible hacking!
+    if ($scope.user && ($scope.user.id != $scope.currentUser.id)){
+      $scope.isFriend = friendshipStatusService.isFriend($scope.user);
+      $scope.hasInvitedCurrentUser = friendshipStatusService.hasInvitedCurrentUser($scope.user);
+      $scope.requestPending = friendshipStatusService.pending($scope.user);
+      $scope.blockedByCurrentUser = friendshipStatusService.blockedByCurrentUser($scope.user);
+    }
 
     $scope.unifyMe = function (id) {
       $scope.showLoading('Please wait...');
@@ -195,7 +225,6 @@ angular.module('project_unify.controllers', [])
     };
 
     $scope.cardSwipedLeft = function (event, index) {
-      console.log(event);
       event.stopPropagation();
     }
 

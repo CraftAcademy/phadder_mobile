@@ -115,6 +115,16 @@ projectUnify.config(function ($ionicConfigProvider) {
         }
       })
 
+      .state('tab.friends',{
+        url: '/friends',
+        views: {
+          'friends': {
+            templateUrl: 'templates/friends/friends.html',
+            controller: 'FriendCtrl'
+          }
+        }
+      })
+
       .state('chat', {
         url: '/chat/',
         views: {
