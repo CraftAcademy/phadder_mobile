@@ -9,7 +9,7 @@
     <div class="list padding">
       <p class="text-muted">Converastion with: {{conversation.from.user_name}}</p>
     </div>
-    <div class="list list-bubble" ng-repeat="message in conversation.messages">
+    <div class="list list-bubble" ng-repeat="message in conversation.messages" id="bubble">
       <div ng-class="message.sender === currentUser.user_name ? 'bubble-to' : 'bubble-from'" class="card">
         <div ng-class="message.sender === currentUser.user_name ? 'stable-bg' : 'calm-bg'" class="item item-text-wrap">
           <p>
