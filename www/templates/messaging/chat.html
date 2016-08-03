@@ -5,7 +5,7 @@
   <!--ion-nav-buttons side="secondary">
     <button class="button button-icon ion-ios-information-outline"></button>
   </ion-nav-buttons-->
-  <ion-content>
+  <ion-content id="content">
     <div class="list padding">
       <p class="text-muted">Converastion with: {{conversation.from.user_name}}</p>
     </div>
@@ -25,39 +25,44 @@
       </div>
     </div>
 
-      <!--div class="card bubble-from">
-        <div class="item item-text-wrap calm-bg">
-          <p>
-            Hi,
-            <br>
-            Thanks for reaching out. I only have my linkedin profile updated so can you take it? And which company do you refer to?
-            <br>
-            Cheers,
-          </p>
-        </div>
+    <!--div class="card bubble-from">
+      <div class="item item-text-wrap calm-bg">
+        <p>
+          Hi,
+          <br>
+          Thanks for reaching out. I only have my linkedin profile updated so can you take it? And which company do you refer to?
+          <br>
+          Cheers,
+        </p>
       </div>
-      <div class="text-muted time-from">11:20am</div>
+    </div>
+    <div class="text-muted time-from">11:20am</div>
 
-      <div class="card bubble-to">
-        <div class="item item-text-wrap stable-bg">
-          <p>
-            Hi,
-            <br>
-            I would like to take it as your latest resume. I come from a head hunting company...
-          </p>
-        </div>
+    <div class="card bubble-to">
+      <div class="item item-text-wrap stable-bg">
+        <p>
+          Hi,
+          <br>
+          I would like to take it as your latest resume. I come from a head hunting company...
+        </p>
       </div>
-      <div class="text-muted time-to">1:22pm</div-->
+    </div>
+    <div class="text-muted time-to">1:22pm</div-->
 
 
   </ion-content>
-  <ion-footer-bar class="bar-light item-input-inset b-t" ng-form="messageForm">
-    <!--button class="button button-clear button-icon ion-camera">
-    </button-->
-    <label class="item-input-wrapper no-bg">
-      <input type="search" placeholder="Add a message" ng-model="newMessage" ng-init="newMessage=''" required>
-    </label>
-    <button class="button button-clear button-icon ion-android-send button-calm" ng-click="sendReply(conversation, newMessage)" ng-disabled="messageForm.$invalid">
+  <ion-footer-bar id="footer"
+                  class="bar-light item-input-inset b-t"
+                  ng-form="messageForm">
+    <textarea placeholder="Add a message"
+              ng-model="newMessage"
+              ng-init="newMessage=''"
+              required
+              msd-elastic>
+      </textarea>
+    <button class="button button-clear button-icon ion-android-send button-calm"
+            ng-click="sendReply(conversation, newMessage)"
+            ng-disabled="messageForm.$invalid">
     </button>
   </ion-footer-bar>
 </ion-view>

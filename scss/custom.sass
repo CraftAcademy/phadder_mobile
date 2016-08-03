@@ -1,6 +1,26 @@
 $brandColor: #008cc9
 $borderColor: #eee
 
+/* allows the bar-footer to be elastic /*
+/* optionally set a max-height */
+/* maxlength on the textarea will prevent /*
+/* it from getting too large also */
+.bar-footer
+  overflow: visible !important
+
+
+.bar-footer
+  textarea
+    resize: none
+    height: 25px
+    width: 100% !important
+
+
+/* fixes an ios bug bear */
+button.ion-android-send
+  padding-top: 2px
+
+
 /* Sidemenu */
 .menu-open .menu-content.menu-animated
   transform: translate3d(-225px, 0px, 0px) scale(.8) !important
@@ -60,12 +80,12 @@ ion-side-menus
       color: #fff
     h3
       color: #fff
-    
+
     .upper
       padding: 16px
       border-bottom: 1px solid #888
       height: 100px
-    .lower 
+    .lower
       height: 80px
       padding: 0
       margin: 0
@@ -99,9 +119,9 @@ ion-side-menus
 .item-me
   .row
     padding: 0
-.viewers 
+.viewers
   margin-top: 16px
-  .avatar 
+  .avatar
     margin-right: 4px
     img
       width: 48px
@@ -175,7 +195,7 @@ td-card
   z-index: 999
   .icon
     font-size: 24px
-    
+
 .yes-text
   top: 65px
   left: -65px
@@ -340,3 +360,5 @@ $cardBg: transparent
 
 .sub-footer
   bottom:50px !important
+
+

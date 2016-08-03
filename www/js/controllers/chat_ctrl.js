@@ -14,6 +14,16 @@ projectUnify.controller('ChatCtrl', function ($scope,
     });
   });
 
+  $scope.$on('elastic:resize', function(event, element, oldHeight, newHeight) {
+    var content, footer, minHeight, footerHeight;
+    footer = document.getElementById("footer");
+    content = document.getElementById("content");
+    minHeight = 40;
+    footerHeight = (minHeight > newHeight ? minHeight : newHeight);
+    footer.style.height = footerHeight +  5 + "px";
+    content.style.height = content.style.height -  5 + "px";
+  });
+
   $scope.sendReply = function (conversation, message) {
     var conversation_id = conversation.id;
     var subject = conversation.subject;

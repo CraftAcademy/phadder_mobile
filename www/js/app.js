@@ -6,7 +6,21 @@
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
 
-var projectUnify = angular.module('project_unify', ['ionic','ionic.service.core', 'ngCordova', 'yaru22.angular-timeago', 'ngMap', 'project_unify.controllers', 'project_unify.services', 'project_unify.directives', 'ionic.contrib.ui.tinderCards', 'ngResource', 'ui.gravatar'])
+var projectUnify = angular.module('project_unify',
+  ['ionic',
+    'ionic.service.core',
+    'ngCordova',
+    'yaru22.angular-timeago',
+    'ngMap',
+    'project_unify.controllers',
+    'project_unify.services',
+    'project_unify.directives',
+    'ionic.contrib.ui.tinderCards',
+    'ngResource',
+    'ui.gravatar',
+    'monospaced.elastic']
+);
+
 projectUnify.config(function ($ionicConfigProvider) {
     $ionicConfigProvider.tabs.position('bottom');
   })
@@ -115,7 +129,7 @@ projectUnify.config(function ($ionicConfigProvider) {
         }
       })
 
-      .state('tab.friends',{
+      .state('tab.friends', {
         url: '/friends',
         views: {
           'friends': {
@@ -190,7 +204,7 @@ document.addEventListener('deviceready', function () {
   // Enable to debug issues.
   // window.plugins.OneSignal.setLogLevel({logLevel: 4, visualLevel: 4});
 
-  var notificationOpenedCallback = function(jsonData) {
+  var notificationOpenedCallback = function (jsonData) {
     console.log('didReceiveRemoteNotificationCallBack: ' + JSON.stringify(jsonData));
   };
 

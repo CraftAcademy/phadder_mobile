@@ -9731,6 +9731,22 @@ a.button {
   -webkit-transition-duration: 0s;
   transition-duration: 0s; }
 
+/* allows the bar-footer to be elastic /* */
+/* optionally set a max-height */
+/* maxlength on the textarea will prevent /* */
+/* it from getting too large also */
+.bar-footer {
+  overflow: visible !important; }
+
+.bar-footer textarea {
+  resize: none;
+  height: 25px;
+  width: 100% !important; }
+
+/* fixes an ios bug bear */
+button.ion-android-send {
+  padding-top: 2px; }
+
 /* Sidemenu */
 .menu-open .menu-content.menu-animated {
   transform: translate3d(-225px, 0px, 0px) scale(0.8) !important; }

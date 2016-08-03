@@ -27,7 +27,7 @@ projectUnify.controller('LoginController', function ($q,
     promise.then(function () {
       $scope.handleCurrentUser($scope.response);
       $scope.closeLogin();
-      $state.go('tab.profile');
+      $state.go('tab.profile', {user: $rootScope.currentUser.user});
     }, function (reason) {
       $scope.statusText = reason;
     });
