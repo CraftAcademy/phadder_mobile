@@ -1,4 +1,4 @@
-angular.module('project_unify.directives', [])
+angular.module('phadder.directives', [])
   .directive('focusMe', function ($timeout) {
     return {
       link: function (scope, element, attrs) {

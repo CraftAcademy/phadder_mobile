@@ -1,4 +1,4 @@
-angular.module('project_unify.controllers', [])
+angular.module('phadder.controllers', [])
 
   .controller('FriendshipCtrl', function ($rootScope, $scope, friendshipService, friendService) {
     $scope.sendFriendshipRequest = function (user) {

@@ -1,4 +1,4 @@
-projectUnify.controller('LoginController', function ($q,
+phadderMobile.controller('LoginController', function ($q,
                                                      $http,
                                                      $scope,
                                                      $rootScope,

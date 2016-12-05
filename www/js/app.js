@@ -6,22 +6,22 @@
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
 
-var projectUnify = angular.module('project_unify',
+var phadderMobile = angular.module('phadder',
   ['ionic',
     'ionic.service.core',
     'ngCordova',
     'yaru22.angular-timeago',
     'ngMap',
-    'project_unify.controllers',
-    'project_unify.services',
-    'project_unify.directives',
+    'phadder.controllers',
+    'phadder.services',
+    'phadder.directives',
     'ionic.contrib.ui.tinderCards',
     'ngResource',
     'ui.gravatar',
     'monospaced.elastic']
 );
 
-projectUnify.config(function ($ionicConfigProvider) {
+phadderMobile.config(function ($ionicConfigProvider) {
     $ionicConfigProvider.tabs.position('bottom');
   })
 

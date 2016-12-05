@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="se.craftacademy.projectunify" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>Project Unify Mobile</name>
+<widget id="se.craftacademy.phadder" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>Phadder Mobile</name>
     <description>
         An Ionic Framework and Cordova project.
     </description>
-    <author email="thomas@agileventures.org" href="http://agileventures.org/">
+    <author email="thomas@craftacademy.se" href="http://craftacademy.se/">
         Thomas Ochman
     </author>
     <content src="index.html" />

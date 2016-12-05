@@ -1,4 +1,4 @@
-projectUnify.controller('FriendCtrl', function ($scope,
+phadderMobile.controller('FriendCtrl', function ($scope,
                                                  $rootScope,
                                                  $stateParams,
                                                  $state,

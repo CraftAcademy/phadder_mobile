@@ -1,4 +1,4 @@
-projectUnify.controller("SystemCtrl", function ($scope, $ionicLoading) {
+phadderMobile.controller("SystemCtrl", function ($scope, $ionicLoading) {
   var deploy = new Ionic.Deploy();
 
   // Update app code with new release from Ionic Deploy

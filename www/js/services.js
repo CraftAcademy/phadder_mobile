@@ -1,4 +1,4 @@
-angular.module('project_unify.services', [])
+angular.module('phadder.services', [])
 
 
   .factory('signUpService', function ($resource, API_URL) {

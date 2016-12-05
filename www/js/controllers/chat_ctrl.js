@@ -1,4 +1,4 @@
-projectUnify.controller('ChatCtrl', function ($scope,
+phadderMobile.controller('ChatCtrl', function ($scope,
                                                  $rootScope,
                                                  $stateParams,
                                                  $state,

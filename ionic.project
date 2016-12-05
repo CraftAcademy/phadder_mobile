@@ -1,6 +1,5 @@
 {
-  "name": "ProjectUnifyMobile",
-  "app_id": "a2b7129f",
+  "name": "PhadderMobile",
   "gulpStartupTasks": [
     "sass",
     "watch"
