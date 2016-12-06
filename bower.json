@@ -19,6 +19,6 @@
     "ionic-ion-tinder-cards": "ionic-contrib-tinder-cards#*"
   },
   "resolutions": {
-    "angular": "1.5.7"
+    "angular": ">= 1.0.8"
   }
 }
