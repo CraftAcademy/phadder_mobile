@@ -15,11 +15,21 @@ $royal:                           #886aea !default;
 $dark:                            #444 !default;
 */
 
-$calm:														#008cc9 !default;
-
+$calm:														#eb6e44 !default;
+$secondary:                       #fff5c3 !default;
+$background-color:                $secondary !default;
 // The path for our ionicons font files, relative to the built CSS in www/css
-$ionicons-font-path: "../lib/ionic/fonts" !default;
+$ionicons-font-path: '../lib/ionic/fonts' !default;
 
 // Include all of Ionic
-@import "www/lib/ionic/scss/ionic";
-@import "custom.sass";
+@import 'www/lib/ionic/scss/ionic';
+@import 'custom.sass';
+
+.background {
+  color: #7c786a;
+
+  .pane,
+  .item-complex .item-content {
+    background-color: $background-color;
+  }
+}
